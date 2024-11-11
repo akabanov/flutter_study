@@ -2,5 +2,14 @@
   "appTitle": "Skeleton Study App",
   "@appTitle": {
     "description": "Application title"
+  },
+
+  "greeting": "Hello, {name}!",
+  "@greeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -63,3 +63,18 @@ Use AppLocalizations for the simple messages as follows:
 ```dart
     AppBar(title: Text(AppLocalizations.of(context)!.appTitle))
 ```
+
+Alternatively, create a shortcut utility class:
+
+```dart
+class L10n {
+  static AppLocalizations of(BuildContext context) =>
+      AppLocalizations.of(context)!;
+}
+```
+
+Usage:
+
+```dart
+AppBar(title: Text(L10n.of(context).appTitle))
+```

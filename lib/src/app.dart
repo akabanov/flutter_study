@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
+import 'l10n/l10n.dart';
+
 class MainApp extends StatelessWidget {
   const MainApp({super.key, this.locale = const Locale('en')});
 
@@ -14,10 +16,9 @@ class MainApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       routes: {
         '/': (context) => Scaffold(
-              appBar:
-                  AppBar(title: Text(AppLocalizations.of(context)!.appTitle)),
-              body: const Center(
-                child: Text('Hello World!'),
+              appBar: AppBar(title: Text(L10n.of(context).appTitle)),
+              body: Center(
+                child: Text(L10n.of(context).greeting("Alex")),
               ),
             ),
       },
