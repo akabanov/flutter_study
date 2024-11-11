@@ -1,0 +1,6 @@
+{
+  "appTitle": "Skeleton Study App",
+  "@appTitle": {
+    "description": "Application title"
+  }
+}
