@@ -27,4 +27,32 @@ void main() {
       expect(text, findsOne);
     });
   });
+
+  group('Unread message number l10n', () {
+    var data = {
+      'en': [
+        'You have no unread messages',
+        'You have one unread message',
+        'You have 2 unread messages',
+        'You have 3 unread messages',
+      ],
+      'ru': [
+        'Непрочитанных сообщений нет',
+        'Непрочитанных сообщений: 1',
+        'Непрочитанных сообщений: 2',
+        'Непрочитанных сообщений: 3',
+      ]
+    };
+    data.forEach((localeName, messages) {
+      var locale = Locale(localeName);
+      for (var (n, message) in messages.indexed) {
+        testWidgets('Shows $n "unread messages" in $locale', (tester) async {
+          await tester.pumpWidget(MainApp(locale: locale, unreadMessages: n));
+
+          var text = find.text(message);
+          expect(text, findsOne);
+        });
+      }
+    });
+  });
 }

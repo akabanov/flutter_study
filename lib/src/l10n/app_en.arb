@@ -3,12 +3,19 @@
   "@appTitle": {
     "description": "Application title"
   },
-
   "greeting": "Hello, {name}!",
   "@greeting": {
     "placeholders": {
       "name": {
         "type": "String"
+      }
+    }
+  },
+  "unreadMessages": "You have {number, plural, =0{no unread messages} =1{one unread message} other{{number} unread messages}}",
+  "@unreadMessages": {
+    "placeholders": {
+      "number": {
+        "type": "num"
       }
     }
   }

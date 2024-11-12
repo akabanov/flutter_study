@@ -1,3 +1,4 @@
+[//]: # (dfs)
 # A cheatsheet on adding i18n to a Flutter app
 
 Add dependencies:
@@ -77,4 +78,21 @@ Usage:
 
 ```dart
 AppBar(title: Text(L10n.of(context).appTitle))
+```
+
+When using plurals, placeholder definition have 2 more arguments: static `plural` and space-separated cases.
+If no numbered case (`=0{}`, `=42{}`, ...) found, default selection is used. 
+Default selection is `other{...}`, where the body may use the placeholder:
+
+```json
+{
+  "unread": "You have {amount, plural, =1{one unread message} other{{amount} unread messages}}",
+  "@unread": {
+    "placeholders": {
+      "amount": {
+        "type": "num"
+      }
+    }
+  }
+}
 ```
