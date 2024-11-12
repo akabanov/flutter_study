@@ -10,7 +10,7 @@ void main() {
 
     setUp(() async {
       server = await HttpServer.bind('localhost', 0);
-       server.forEach((HttpRequest request) {
+      server.forEach((HttpRequest request) {
         request.response.write('hello');
         request.response.close();
       });
