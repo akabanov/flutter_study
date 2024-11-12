@@ -1,3 +1,5 @@
-# flutter_study_skeleton_app
+# Flutter applications development study project
 
-A new Flutter project.
+This is to learn basic Dart and Flutter concepts.
+
+Each concept is learned by writing unit, widget and integration tests with optional auxiliary code.
