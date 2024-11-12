@@ -16,7 +16,7 @@ void main() {
         locale: Locale('ru'),
       ));
 
-      var text = find.text('Приложение для Изучения Skeleton');
+      var text = find.text('Приложение для Изучения Skeleton App');
       expect(text, findsOne);
     });
 
