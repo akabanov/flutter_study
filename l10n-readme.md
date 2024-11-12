@@ -81,8 +81,9 @@ AppBar(title: Text(L10n.of(context).appTitle))
 ```
 
 When using plurals, placeholder definition have 2 more arguments: static `plural` and space-separated cases.
-If no numbered case (`=0{}`, `=42{}`, ...) found, default selection is used. 
-Default selection is `other{...}`, where the body may use the placeholder:
+Special rules are `zero{...}`, `one{...}`, `two{...}`, `few{...}`, and `many{...}`, see `plural_rules.dart`.
+Also, exact number can be used: `=0{}`, `=42{}`.
+Fallback selection is `other{...}`.
 
 ```json
 {
