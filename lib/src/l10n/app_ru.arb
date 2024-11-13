@@ -1,5 +1,5 @@
 {
-  "appTitle": "Приложение для Изучения Skeleton App",
-  "greeting": "Привет, {name}!",
-  "unreadMessages": "{number, plural, zero{Нет непрочитанных сообщений} one{{number} непрочитанное сообщение} other{{number} непрочитанных сообщений}}"
+  "testAppTitle": "Приложение для Изучения Skeleton App",
+  "testGreeting": "Привет, {name}!",
+  "testUnreadMessages": "{number, plural, zero{Нет непрочитанных сообщений} one{{number} непрочитанное сообщение} other{{number} непрочитанных сообщений}}"
 }

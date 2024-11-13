@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_study_skeleton_app/src/app.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:flutter_study_skeleton_app/src/l10n/l10n.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Localization', () {
     testWidgets("Shows correct english title", (tester) async {
-      await tester.pumpWidget(const MainApp());
+      await tester.pumpWidget(const TestApp());
 
       var text = find.text('Skeleton Study App');
       expect(text, findsOne);
     });
 
     testWidgets("Shows correct russian title", (tester) async {
-      await tester.pumpWidget(const MainApp(
+      await tester.pumpWidget(const TestApp(
         locale: Locale('ru'),
       ));
 
@@ -21,7 +22,7 @@ void main() {
     });
 
     testWidgets('Shows correct greeting', (tester) async {
-      await tester.pumpWidget(const MainApp());
+      await tester.pumpWidget(const TestApp());
 
       var text = find.text('Hello, Alex!');
       expect(text, findsOne);
@@ -46,11 +47,42 @@ void main() {
     for (var (n, localeName, message) in data) {
       var locale = Locale(localeName);
       testWidgets('Shows $n "unread messages" in $locale', (tester) async {
-        await tester.pumpWidget(MainApp(locale: locale, unreadMessages: n));
+        await tester.pumpWidget(TestApp(locale: locale, unreadMessages: n));
 
         var text = find.text(message);
         expect(text, findsOne);
       });
     }
   });
+}
+
+class TestApp extends StatelessWidget {
+  const TestApp(
+      {super.key, this.locale = const Locale('en'), this.unreadMessages = 0});
+
+  final Locale locale;
+  final int unreadMessages;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      locale: locale,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Builder(
+        builder: (context) => Scaffold(
+          appBar: AppBar(title: Text(L10n.of(context).testAppTitle)),
+          body: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(L10n.of(context).testGreeting("Alex")),
+                Text(L10n.of(context).testUnreadMessages(unreadMessages))
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
