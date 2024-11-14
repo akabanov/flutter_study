@@ -9,7 +9,10 @@ import 'mockito_test.mocks.dart';
 final fails = throwsA(const TypeMatcher<TestFailure>());
 
 class FakeCat extends Fake implements Cat {
-  //
+  @override
+  bool go(String destination) {
+    return destination.isNotEmpty;
+  }
 }
 
 void main() {
@@ -110,8 +113,10 @@ void main() {
 
     test('stub conditionally', () async {
       var cat = MockCat();
-      when(cat.eat(any, hungry: argThat(isFalse, named: 'hungry'))).thenThrow('no!');
-      when(cat.eat(any, hungry: argThat(isTrue, named: 'hungry'))).thenAnswer((_) async => true);
+      when(cat.eat(any, hungry: argThat(isFalse, named: 'hungry')))
+          .thenThrow('no!');
+      when(cat.eat(any, hungry: argThat(isTrue, named: 'hungry')))
+          .thenAnswer((_) async => true);
       expect(() async => await cat.eat('something'), throwsA(anything));
       expect(await cat.eat('something', hungry: true), true);
     });
@@ -135,14 +140,64 @@ void main() {
       var cat = MockCat();
       cat.go('north');
       cat.go('south');
-      expect(verify(cat.go(captureThat(startsWith('s')))).captured.first, 'south');
+      expect(
+          verify(cat.go(captureThat(startsWith('s')))).captured.first, 'south');
     });
 
     test('captureNamed', () {
       var cat = MockCat();
       cat.eat('mouse', hungry: false);
       cat.eat('carrot', hungry: true);
-      expect(verify(cat.eat(any, hungry: captureAnyNamed('hungry'))).captured, [false, true]);
+      expect(verify(cat.eat(any, hungry: captureAnyNamed('hungry'))).captured,
+          [false, true]);
+    });
+  });
+
+  group('synchronisation', () {
+    test('wait for a method to finish', () {
+      var cat = MockCat();
+      cat.go('places');
+      untilCalled(cat.go(any)); // passes immediately
+    });
+  });
+
+  group('cleanup', () {
+    test('clear interactions', () {
+      var cat = MockCat();
+
+      expect(cat.go('somewhere'), isFalse);
+
+      when(cat.go(any)).thenReturn(true);
+      expect(cat.go('some place'), isTrue);
+
+      cat.go('somewhere');
+
+      clearInteractions(cat);
+      verifyNever(cat.go(any));
+
+      expect(cat.go('some place'), isTrue);
+    });
+
+    test('reset mock', () {
+      var cat = MockCat();
+      when(cat.go(any)).thenReturn(true);
+      expect(cat.go('places'), isTrue);
+
+      reset(cat);
+      verifyZeroInteractions(cat);
+      expect(cat.go('places'), isFalse);
+    });
+  });
+
+  group('fake cat', () {
+    test('can call implemented cases', () {
+      var cat = FakeCat();
+    expect(cat.go('somewhere'), isTrue);
+    });
+
+    test('fails when calling not implemented methods', () {
+      var cat = FakeCat();
+      expect(() => cat.lives, throwsUnimplementedError);
     });
   });
 }

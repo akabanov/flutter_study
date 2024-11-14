@@ -67,6 +67,17 @@ Lifecycle:
 - verify
 - clean
 
+#### Faking
+
+```dart
+class FakeCat extends Fake implements Cat {
+  @override
+  bool go(String destination) {
+    return destination.isNotEmpty;
+  }
+}
+```
+
 #### Stubbing
 
 Stubbing:
@@ -83,6 +94,8 @@ Argument matching:
 - `when(cat.eat(any, hungry: argThat(isTrue, named: 'hungry'))).thenAnswer((_) async => true);`
 
 #### Verification
+
+Waiting for a method call: `untilCalled(cat.go(any))`
 
 The amount of calls:
 
@@ -103,4 +116,6 @@ expect(verify(cat.eat(any, hungry: captureAnyNamed('hungry'))).captured, [false,
 ```
 
 #### Cleaning up
+
+`clearInteractions(cat);`, or `reset(cat);` to erase stubs as well
 
