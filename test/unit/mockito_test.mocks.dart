@@ -43,13 +43,14 @@ class MockCat extends _i1.Mock implements _i2.Cat {
       );
 
   @override
-  void go(String? destination) => super.noSuchMethod(
+  bool go(String? destination) => (super.noSuchMethod(
         Invocation.method(
           #go,
           [destination],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
 
   @override
   _i3.Future<bool> eat(
@@ -65,4 +66,14 @@ class MockCat extends _i1.Mock implements _i2.Cat {
         returnValue: _i3.Future<bool>.value(false),
         returnValueForMissingStub: _i3.Future<bool>.value(false),
       ) as _i3.Future<bool>);
+
+  @override
+  _i3.Stream<String> talk() => (super.noSuchMethod(
+        Invocation.method(
+          #talk,
+          [],
+        ),
+        returnValue: _i3.Stream<String>.empty(),
+        returnValueForMissingStub: _i3.Stream<String>.empty(),
+      ) as _i3.Stream<String>);
 }

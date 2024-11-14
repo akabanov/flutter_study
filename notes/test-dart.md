@@ -69,7 +69,13 @@ Lifecycle:
 
 #### Stubbing
 
-_todo_
+Stubbing:
+
+- `when(obj.call).thenThrow(...)`
+- `when(obj.call).thenReturn(...)`
+- `when(obj.call).thenAnswer((_) => generate())`
+- `when(obj.futureCall).thenAnswer((_) async => ...)`
+- `when(obj.streamCall).thenAnswer((_) => Stream.fromIterable(...))`
 
 Argument matching:
 _todo_
@@ -78,11 +84,11 @@ _todo_
 
 The amount of calls:
 
-- `verifyZeroInteractions(mock)`
-- `verifyNever(call)`
 - `verify(call)`
 - `verify(call).called(value | matcher)`
 - `verifyInOrder(\[calls])`
+- `verifyNever(call)`
+- `verifyZeroInteractions(mock)`
 
 Arguments capturing
 
