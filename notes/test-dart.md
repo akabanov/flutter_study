@@ -78,7 +78,9 @@ Stubbing:
 - `when(obj.streamCall).thenAnswer((_) => Stream.fromIterable(...))`
 
 Argument matching:
-_todo_
+
+- `when(cat.eat(any, hungry: argThat(isFalse, named: 'hungry'))).thenThrow('no!');`
+- `when(cat.eat(any, hungry: argThat(isTrue, named: 'hungry'))).thenAnswer((_) async => true);`
 
 #### Verification
 
@@ -88,9 +90,17 @@ The amount of calls:
 - `verify(call).called(value | matcher)`
 - `verifyInOrder(\[calls])`
 - `verifyNever(call)`
+- `verifyNoMoreInteractions(mock)`
 - `verifyZeroInteractions(mock)`
 
 Arguments capturing
+
+```
+var cat = MockCat();
+cat.eat('mouse', hungry: false);
+cat.eat('carrot', hungry: true);
+expect(verify(cat.eat(any, hungry: captureAnyNamed('hungry'))).captured, [false, true]);
+```
 
 #### Cleaning up
 

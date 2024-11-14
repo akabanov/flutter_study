@@ -107,5 +107,42 @@ void main() {
       expect(await cat.eat('carrot'), false);
       expect(await cat.eat('carrot', hungry: true), true);
     });
+
+    test('stub conditionally', () async {
+      var cat = MockCat();
+      when(cat.eat(any, hungry: argThat(isFalse, named: 'hungry'))).thenThrow('no!');
+      when(cat.eat(any, hungry: argThat(isTrue, named: 'hungry'))).thenAnswer((_) async => true);
+      expect(() async => await cat.eat('something'), throwsA(anything));
+      expect(await cat.eat('something', hungry: true), true);
+    });
+  });
+
+  group('call arguments capturing', () {
+    test('capture any', () {
+      var cat = MockCat();
+      cat.go('south');
+      expect(verify(cat.go(captureAny)).captured.first, 'south');
+    });
+
+    test('capture many', () {
+      var cat = MockCat();
+      cat.go('north');
+      cat.go('south');
+      expect(verify(cat.go(captureAny)).captured, ['north', 'south']);
+    });
+
+    test('captureThat', () {
+      var cat = MockCat();
+      cat.go('north');
+      cat.go('south');
+      expect(verify(cat.go(captureThat(startsWith('s')))).captured.first, 'south');
+    });
+
+    test('captureNamed', () {
+      var cat = MockCat();
+      cat.eat('mouse', hungry: false);
+      cat.eat('carrot', hungry: true);
+      expect(verify(cat.eat(any, hungry: captureAnyNamed('hungry'))).captured, [false, true]);
+    });
   });
 }
