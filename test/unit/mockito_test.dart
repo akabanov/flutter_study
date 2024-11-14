@@ -6,7 +6,7 @@ import 'mockito_cat.dart';
 @GenerateNiceMocks([MockSpec<Cat>()])
 import 'mockito_test.mocks.dart';
 
-final fails = throwsA(const TypeMatcher<TestFailure>());
+final fails = throwsA(isA<TestFailure>());
 
 class FakeCat extends Fake implements Cat {
   @override
