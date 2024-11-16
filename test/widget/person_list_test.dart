@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_study_skeleton_app/src/app.dart';
 import 'package:flutter_study_skeleton_app/src/person/person.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -27,13 +28,32 @@ void main() {
 
     testWidgets('deletes a person on swipe', (tester) async {
       var friends = generateFriends(2);
-      await tester.pumpWidget(MainApp(friends: friends));
+      var mainApp = MainApp(friends: friends);
+      await tester.pumpWidget(mainApp);
 
-      var tileFinder = find.byKey(Key(friends.first.id));
+      var redundant = friends.first;
+      var tileFinder = find.byKey(Key(redundant.id));
+
+      expect(mainApp.friends, contains(redundant));
+      expect(tileFinder, findsOne);
+
       await tester.drag(tileFinder, Offset(-500, 10));
       await tester.pumpAndSettle();
 
+      expect(mainApp.friends, isNot(contains(redundant)));
       expect(tileFinder, findsNothing);
+    });
+
+    testWidgets('adds a person', (tester) async {
+        var mainApp = MainApp(friends: generateFriends(1));
+        await tester.pumpWidget(mainApp);
+
+        await tester.enterText(find.byType(TextField), 'Alex Kabanov');
+        await tester.tap(find.byType(FloatingActionButton));
+        await tester.pump();
+
+        expect(find.text('Alex Kabanov'), findsOne);
+        expect(mainApp.friends.last.name, 'Alex Kabanov');
     });
   });
 }

@@ -4,7 +4,13 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('widget finders', () {
     testWidgets('text', (tester) async {
-      await tester.pumpWidget(const Scaffold(body: Text('abc')));
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: Text('abc'),
+          ),
+        ),
+      );
 
       var actual = find.text('abc');
       expect(actual, findsOne);

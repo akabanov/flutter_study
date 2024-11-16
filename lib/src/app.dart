@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_study_skeleton_app/src/person/person.dart';
 
 class MainApp extends StatefulWidget {
-  MainApp({super.key, required this.friends});
+  const MainApp({super.key, required this.friends});
 
-  final TextEditingController controller = TextEditingController();
   final List<Person> friends;
 
   @override
@@ -12,6 +11,8 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
+  final TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,6 +27,9 @@ class _MainAppState extends State<MainApp> {
             return Dismissible(
               key: Key(friend.id),
               direction: DismissDirection.endToStart,
+              onDismissed: (_) => setState(() {
+                widget.friends.removeWhere((p) => p.id == friend.id);
+              }),
               background: Container(
                 color: Colors.red,
                 alignment: Alignment.centerRight,
@@ -48,7 +52,8 @@ class _MainAppState extends State<MainApp> {
             children: [
               const Text('Add friend:'),
               TextField(
-                controller: widget.controller,
+                controller: controller,
+                textCapitalization: TextCapitalization.words,
               ),
             ],
           ),
@@ -56,8 +61,8 @@ class _MainAppState extends State<MainApp> {
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
           onPressed: () {
-            var controller = widget.controller;
-            var input = controller.text;
+            var controller = this.controller;
+            var input = controller.text.trim();
             if (input.isNotEmpty) {
               setState(() {
                 widget.friends.add(Person(input));
