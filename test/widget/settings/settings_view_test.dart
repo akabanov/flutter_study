@@ -7,38 +7,36 @@ import '../../unit/settings/fake_settings_service.dart';
 
 void main() {
   group('Settings view tests', () {
-    testWidgets('Only default selection is visible', (tester) async {
-      var controller = SettingsController(FakeSettingsService(ThemeMode.light));
-      await controller.init();
-      await tester.pumpWidget(
-        MaterialApp(
-          home: SettingsView(controller: controller),
-        ),
-      );
+    late SettingsController controller;
+    late Widget appWidget;
 
-      expect(find.text('System'), findsNothing);
-      expect(find.text('Light'), findsOne);
+    setUp(() async {
+      controller = SettingsController(FakeSettingsService(ThemeMode.light));
+      await controller.init();
+
+      appWidget = ListenableBuilder(
+          listenable: controller,
+          builder: (context, _) => MaterialApp(
+                home: SettingsView(controller: controller),
+              ));
     });
 
-    testWidgets('Switches selection triggered by controller', (tester) async {
-      var controller =
-          SettingsController(FakeSettingsService(ThemeMode.system));
-      await controller.init();
-      await tester.pumpWidget(
-        ListenableBuilder(
-            listenable: controller,
-            builder: (context, _) {
-              return MaterialApp(
-                home: SettingsView(controller: controller),
-              );
-            }),
-      );
+    testWidgets('Correct theme mode segment is selected', (tester) async {
+      await tester.pumpWidget(appWidget);
 
-      await controller.updateThemeMode(ThemeMode.light);
+      // Initial state check
+      expect(themeButton(tester).selected, {ThemeMode.light});
+
+      // Perform the tap
+      await tester.tap(find.text('Dark'));
       await tester.pumpAndSettle();
 
-      expect(find.text('System'), findsNothing);
-      expect(find.text('Light'), findsOne);
+      expect(themeButton(tester).selected, {ThemeMode.dark});
     });
   });
+}
+
+SegmentedButton<ThemeMode> themeButton(WidgetTester tester) {
+  return tester.widget<SegmentedButton<ThemeMode>>(
+        find.byType(SegmentedButton<ThemeMode>));
 }
