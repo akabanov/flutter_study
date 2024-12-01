@@ -10,7 +10,7 @@ _$TodoEntityImpl _$$TodoEntityImplFromJson(Map<String, dynamic> json) =>
     _$TodoEntityImpl(
       complete: json['complete'] as bool,
       id: json['id'] as String,
-      title: json['title'] as String,
+      task: json['task'] as String,
       note: json['note'] as String,
     );
 
@@ -18,6 +18,6 @@ Map<String, dynamic> _$$TodoEntityImplToJson(_$TodoEntityImpl instance) =>
     <String, dynamic>{
       'complete': instance.complete,
       'id': instance.id,
-      'title': instance.title,
+      'task': instance.task,
       'note': instance.note,
     };

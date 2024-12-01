@@ -21,8 +21,11 @@ TodoEntity _$TodoEntityFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TodoEntity {
   bool get complete => throw _privateConstructorUsedError;
+
   String get id => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
+
+  String get task => throw _privateConstructorUsedError;
+
   String get note => throw _privateConstructorUsedError;
 
   /// Serializes this TodoEntity to a JSON map.
@@ -40,8 +43,9 @@ abstract class $TodoEntityCopyWith<$Res> {
   factory $TodoEntityCopyWith(
           TodoEntity value, $Res Function(TodoEntity) then) =
       _$TodoEntityCopyWithImpl<$Res, TodoEntity>;
+
   @useResult
-  $Res call({bool complete, String id, String title, String note});
+  $Res call({bool complete, String id, String task, String note});
 }
 
 /// @nodoc
@@ -51,6 +55,7 @@ class _$TodoEntityCopyWithImpl<$Res, $Val extends TodoEntity>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -61,7 +66,7 @@ class _$TodoEntityCopyWithImpl<$Res, $Val extends TodoEntity>
   $Res call({
     Object? complete = null,
     Object? id = null,
-    Object? title = null,
+    Object? task = null,
     Object? note = null,
   }) {
     return _then(_value.copyWith(
@@ -73,9 +78,9 @@ class _$TodoEntityCopyWithImpl<$Res, $Val extends TodoEntity>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      task: null == task
+          ? _value.task
+          : task // ignore: cast_nullable_to_non_nullable
               as String,
       note: null == note
           ? _value.note
@@ -91,9 +96,10 @@ abstract class _$$TodoEntityImplCopyWith<$Res>
   factory _$$TodoEntityImplCopyWith(
           _$TodoEntityImpl value, $Res Function(_$TodoEntityImpl) then) =
       __$$TodoEntityImplCopyWithImpl<$Res>;
+
   @override
   @useResult
-  $Res call({bool complete, String id, String title, String note});
+  $Res call({bool complete, String id, String task, String note});
 }
 
 /// @nodoc
@@ -111,7 +117,7 @@ class __$$TodoEntityImplCopyWithImpl<$Res>
   $Res call({
     Object? complete = null,
     Object? id = null,
-    Object? title = null,
+    Object? task = null,
     Object? note = null,
   }) {
     return _then(_$TodoEntityImpl(
@@ -123,9 +129,9 @@ class __$$TodoEntityImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      task: null == task
+          ? _value.task
+          : task // ignore: cast_nullable_to_non_nullable
               as String,
       note: null == note
           ? _value.note
@@ -141,7 +147,7 @@ class _$TodoEntityImpl with DiagnosticableTreeMixin implements _TodoEntity {
   const _$TodoEntityImpl(
       {required this.complete,
       required this.id,
-      required this.title,
+      required this.task,
       required this.note});
 
   factory _$TodoEntityImpl.fromJson(Map<String, dynamic> json) =>
@@ -152,13 +158,13 @@ class _$TodoEntityImpl with DiagnosticableTreeMixin implements _TodoEntity {
   @override
   final String id;
   @override
-  final String title;
+  final String task;
   @override
   final String note;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TodoEntity(complete: $complete, id: $id, title: $title, note: $note)';
+    return 'TodoEntity(complete: $complete, id: $id, task: $task, note: $note)';
   }
 
   @override
@@ -168,7 +174,7 @@ class _$TodoEntityImpl with DiagnosticableTreeMixin implements _TodoEntity {
       ..add(DiagnosticsProperty('type', 'TodoEntity'))
       ..add(DiagnosticsProperty('complete', complete))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('title', title))
+      ..add(DiagnosticsProperty('task', task))
       ..add(DiagnosticsProperty('note', note));
   }
 
@@ -180,13 +186,13 @@ class _$TodoEntityImpl with DiagnosticableTreeMixin implements _TodoEntity {
             (identical(other.complete, complete) ||
                 other.complete == complete) &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.title, title) || other.title == title) &&
+            (identical(other.task, task) || other.task == task) &&
             (identical(other.note, note) || other.note == note));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, complete, id, title, note);
+  int get hashCode => Object.hash(runtimeType, complete, id, task, note);
 
   /// Create a copy of TodoEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -208,7 +214,7 @@ abstract class _TodoEntity implements TodoEntity {
   const factory _TodoEntity(
       {required final bool complete,
       required final String id,
-      required final String title,
+      required final String task,
       required final String note}) = _$TodoEntityImpl;
 
   factory _TodoEntity.fromJson(Map<String, dynamic> json) =
@@ -216,10 +222,13 @@ abstract class _TodoEntity implements TodoEntity {
 
   @override
   bool get complete;
+
   @override
   String get id;
+
   @override
-  String get title;
+  String get task;
+
   @override
   String get note;
 

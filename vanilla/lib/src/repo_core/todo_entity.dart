@@ -1,5 +1,5 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'todo_entity.freezed.dart';
 part 'todo_entity.g.dart';
@@ -9,7 +9,7 @@ class TodoEntity with _$TodoEntity {
   const factory TodoEntity({
     required bool complete,
     required String id,
-    required String title,
+    required String task,
     required String note,
   }) = _TodoEntity;
 

@@ -13,6 +13,5 @@ void main() {
     test('Freezed implements toString', () async {
       expect(FreezedEntity(id: '42').toString(), contains('42'));
     });
-
   });
 }
