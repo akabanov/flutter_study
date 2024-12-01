@@ -38,5 +38,5 @@ void main() {
 
 SegmentedButton<ThemeMode> themeButton(WidgetTester tester) {
   return tester.widget<SegmentedButton<ThemeMode>>(
-        find.byType(SegmentedButton<ThemeMode>));
+      find.byType(SegmentedButton<ThemeMode>));
 }

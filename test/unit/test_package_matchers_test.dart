@@ -56,13 +56,15 @@ void main() {
         'Hello World!',
       ]);
 
-      expect(stream, emitsInOrder([
-        'HALO',
-        emits(startsWith('X-')),
-        emits(isEmpty),
-        emitsAnyOf(['Hello World!', 'Hola']),
-        emitsDone
-      ]));
+      expect(
+          stream,
+          emitsInOrder([
+            'HALO',
+            emits(startsWith('X-')),
+            emits(isEmpty),
+            emitsAnyOf(['Hello World!', 'Hola']),
+            emitsDone
+          ]));
     });
   });
 }
