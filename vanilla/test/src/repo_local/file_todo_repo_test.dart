@@ -5,19 +5,18 @@ import 'package:vanilla/repo_core.dart';
 import 'package:vanilla/src/repo_local/file_todo_repo.dart';
 
 void main() {
-  group('File based repo tests', () {
-    var testDir = Directory.systemTemp.createTemp('todo_test_');
-    var repo = FileTodoRepo(tag: 'test', getDirectory: () => testDir);
+  group('File repository for Todo entities', () {
     var todos = [
-      TodoEntity(complete: false, id: '42', task: 'Rest', note: 'Thoroughly')
+      TodoEntity(complete: true, id: '42', task: 'Rest', note: 'Fully')
     ];
+    var tempDir = Directory.systemTemp.createTemp('todo_temp_');
+    var repo = FileTodoRepo(tag: 'todo', getDirectory: () => tempDir);
 
     tearDownAll(() async {
-      var dir = await testDir;
-      dir.deleteSync(recursive: true);
+      (await tempDir).deleteSync(recursive: true);
     });
 
-    test('Fails if no data exists', () async {
+    test('Fails if empty', () async {
       expect(() => repo.loadTodos(), throwsException);
     });
 
@@ -28,9 +27,9 @@ void main() {
     });
 
     test('Loads todos', () async {
-      var loaded = await repo.loadTodos();
+      var actual = await repo.loadTodos();
 
-      expect(loaded, todos);
+      expect(actual, todos);
     });
   });
 }

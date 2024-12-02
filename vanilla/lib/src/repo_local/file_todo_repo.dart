@@ -7,18 +7,14 @@ class FileTodoRepo implements TodoRepo {
   final String _tag;
   final Future<Directory> Function() _getDirectory;
 
-  FileTodoRepo({required tag, required getDirectory})
+  FileTodoRepo(
+      {required String tag, required Future<Directory> Function() getDirectory})
       : _tag = tag,
         _getDirectory = getDirectory;
 
-  @override
-  Future<List<TodoEntity>> loadTodos() async {
-    var file = await _getFile();
-    var body = await file.readAsString();
-    return JsonDecoder()
-        .convert(body)['todos']
-        .map<TodoEntity>((todo) => TodoEntity.fromJson(todo))
-        .toList();
+  Future<File> _getFile() async {
+    var directory = await _getDirectory();
+    return File("${directory.path}/${_tag}_todo.json");
   }
 
   @override
@@ -28,15 +24,12 @@ class FileTodoRepo implements TodoRepo {
         .convert({'todos': todos.map((todo) => todo.toJson()).toList()}));
   }
 
-  Future<void> clean() async {
-    var file = await _getFile();
-    if (await file.exists()) {
-      _getFile().then((f) => f.delete());
-    }
-  }
-
-  Future<File> _getFile() async {
-    var dir = await _getDirectory();
-    return File('${dir.path}/${_tag}_todo.json');
+  @override
+  Future<List<TodoEntity>> loadTodos() async {
+    var content = await _getFile().then((f) => f.readAsString());
+    return JsonDecoder()
+        .convert(content)['todos']
+        .map<TodoEntity>((json) => TodoEntity.fromJson(json))
+        .toList();
   }
 }
