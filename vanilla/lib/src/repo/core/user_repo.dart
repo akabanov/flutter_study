@@ -1,4 +1,4 @@
-import 'package:vanilla/src/repo_core/user_entity.dart';
+import 'package:vanilla/src/repo/core/user_entity.dart';
 
 abstract class UserRepo {
   Future<UserEntity> login();

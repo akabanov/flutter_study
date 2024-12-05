@@ -21,9 +21,7 @@ UserEntity _$UserEntityFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserEntity {
   String get id => throw _privateConstructorUsedError;
-
   String get name => throw _privateConstructorUsedError;
-
   String get imageUrl => throw _privateConstructorUsedError;
 
   /// Serializes this UserEntity to a JSON map.
@@ -41,7 +39,6 @@ abstract class $UserEntityCopyWith<$Res> {
   factory $UserEntityCopyWith(
           UserEntity value, $Res Function(UserEntity) then) =
       _$UserEntityCopyWithImpl<$Res, UserEntity>;
-
   @useResult
   $Res call({String id, String name, String imageUrl});
 }
@@ -53,7 +50,6 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -89,7 +85,6 @@ abstract class _$$UserEntityImplCopyWith<$Res>
   factory _$$UserEntityImplCopyWith(
           _$UserEntityImpl value, $Res Function(_$UserEntityImpl) then) =
       __$$UserEntityImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({String id, String name, String imageUrl});
@@ -202,10 +197,8 @@ abstract class _UserEntity implements UserEntity {
 
   @override
   String get id;
-
   @override
   String get name;
-
   @override
   String get imageUrl;
 

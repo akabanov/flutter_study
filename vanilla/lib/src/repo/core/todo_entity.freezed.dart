@@ -21,11 +21,8 @@ TodoEntity _$TodoEntityFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TodoEntity {
   bool get complete => throw _privateConstructorUsedError;
-
   String get id => throw _privateConstructorUsedError;
-
   String get task => throw _privateConstructorUsedError;
-
   String get note => throw _privateConstructorUsedError;
 
   /// Serializes this TodoEntity to a JSON map.
@@ -43,7 +40,6 @@ abstract class $TodoEntityCopyWith<$Res> {
   factory $TodoEntityCopyWith(
           TodoEntity value, $Res Function(TodoEntity) then) =
       _$TodoEntityCopyWithImpl<$Res, TodoEntity>;
-
   @useResult
   $Res call({bool complete, String id, String task, String note});
 }
@@ -55,7 +51,6 @@ class _$TodoEntityCopyWithImpl<$Res, $Val extends TodoEntity>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -96,7 +91,6 @@ abstract class _$$TodoEntityImplCopyWith<$Res>
   factory _$$TodoEntityImplCopyWith(
           _$TodoEntityImpl value, $Res Function(_$TodoEntityImpl) then) =
       __$$TodoEntityImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({bool complete, String id, String task, String note});
@@ -222,13 +216,10 @@ abstract class _TodoEntity implements TodoEntity {
 
   @override
   bool get complete;
-
   @override
   String get id;
-
   @override
   String get task;
-
   @override
   String get note;
 

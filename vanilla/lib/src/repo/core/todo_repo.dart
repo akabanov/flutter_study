@@ -1,4 +1,4 @@
-import 'package:vanilla/src/repo_core/todo_entity.dart';
+import 'package:vanilla/src/repo/core/todo_entity.dart';
 
 abstract class TodoRepo {
   Future<void> saveTodos(List<TodoEntity> todos);

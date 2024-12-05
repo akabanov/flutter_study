@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:vanilla/repo_core.dart';
+import 'package:vanilla/src/repo/repo_core.dart';
 
 class FileTodoRepo implements TodoRepo {
   final String _tag;
