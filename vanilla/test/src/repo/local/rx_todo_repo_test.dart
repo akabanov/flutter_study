@@ -1,16 +1,16 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:vanilla/src/repo/local/fake_web_todo_repo.dart';
 import 'package:vanilla/src/repo/local/rx_todo_repo.dart';
 import 'package:vanilla/src/repo/repo_core.dart';
 
-import 'fake_todo_repo.dart';
 import 'rx_todo_repo_test.mocks.dart';
 
 @GenerateNiceMocks([MockSpec<TodoRepo>()])
 void main() {
   group('RX todo entity repo tests', () {
-    var todos = [FakeTodoRepo.todos.first];
+    var todos = [FakeWebTodoRepo.todos.first];
     var originalTodo = todos.first;
     var updatedTodo = originalTodo.copyWith(complete: !originalTodo.complete);
     var newTodo =

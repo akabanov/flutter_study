@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:vanilla/src/app.dart';
+import 'package:vanilla/src/repo/local/fake_web_todo_repo.dart';
 
 void main() async {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp();
-  }
+  var repo = FakeWebTodoRepo();
+  runApp(App(todoRepo: repo));
 }
