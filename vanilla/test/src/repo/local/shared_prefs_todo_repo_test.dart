@@ -4,23 +4,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vanilla/src/repo/repo_core.dart';
 import 'package:vanilla/src/repo/local/shared_prefs_todo_repo.dart';
 
+import 'fake_todo_repo.dart';
 import 'shared_prefs_todo_repo_test.mocks.dart';
 
 @GenerateNiceMocks([MockSpec<SharedPreferencesAsync>()])
 void main() {
   const key = 'todos_test_prefs_key';
-  var todos = [
-    TodoEntity(
-        complete: false,
-        id: '42',
-        task: 'Have some rest',
-        note: 'In shared preferences'),
-    TodoEntity(
-        complete: true, id: '12', task: 'Eat breakfast', note: 'A healthy one'),
-  ];
+  var todos = FakeTodoRepo.todos;
 
   var encoder = JsonEncoder();
   var todoJsonList = todos
