@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vanilla/src/repo/core/todo_entity.dart';
 import 'package:vanilla/src/repo/core/todo_repo.dart';
 import 'package:vanilla/src/ui/model/todo_list_state.dart';
 import 'package:vanilla/src/ui/screen/todo_list_screen.dart';
@@ -30,9 +31,35 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        onGenerateRoute: (settings) => switch (settings.name) {
-              (TodoListScreen.routeName || _) => MaterialPageRoute(
-                  builder: (_) => TodoListScreen(todoListState: _listState))
-            });
+      onGenerateRoute: (settings) => switch (settings.name) {
+        (TodoListScreen.routeName || _) => MaterialPageRoute(
+            builder: (_) => TodoListScreen(
+              todoListState: _listState,
+              todoAdder: addTodo,
+              todoUpdater: updateTodo,
+              todoRemover: removeTodo,
+            ),
+          ),
+      },
+    );
+  }
+
+  void addTodo(TodoEntity newTodo) {
+    updateTodoList(() => _listState.copyWithNewTodo(newTodo));
+  }
+
+  void updateTodo(TodoEntity update) {
+    updateTodoList(() => _listState.copyWithUpdatedTodo(update));
+  }
+
+  void removeTodo(TodoEntity expired) {
+    updateTodoList(() => _listState.copyWithRemovedTodo(expired));
+  }
+
+  void updateTodoList(TodoListState Function() convert) {
+    setState(() {
+      _listState = convert();
+      widget.todoRepo.saveTodos(_listState.todos);
+    });
   }
 }

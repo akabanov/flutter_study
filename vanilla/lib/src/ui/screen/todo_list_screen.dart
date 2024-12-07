@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:vanilla/src/ui/model/todo_list_state.dart';
 import 'package:vanilla/src/ui/screen/static_todo_screen.dart';
+import 'package:vanilla/src/ui/widget/todo_list_item_view.dart';
 
 class TodoListScreen extends StatefulWidget {
-  const TodoListScreen({super.key, required this.todoListState});
+  const TodoListScreen(
+      {super.key,
+      required this.todoListState,
+      required this.todoUpdater,
+      required this.todoRemover,
+      required this.todoAdder});
 
   static const routeName = '/';
 
   final TodoListState todoListState;
+  final TodoAction todoAdder;
+  final TodoAction todoUpdater;
+  final TodoAction todoRemover;
 
   @override
   State<TodoListScreen> createState() => _TodoListScreenState();
@@ -47,7 +56,15 @@ class _TodoListScreenState extends State<TodoListScreen> {
       appBar: AppBar(
         title: Text('Todo list'),
       ),
-      body: Placeholder(),
+      body: SafeArea(
+        child: ListView.builder(
+          itemCount: state.todos.length,
+          itemBuilder: (_, index) => TodoListItemView(
+              entity: state.todos[index],
+              todoUpdater: widget.todoUpdater,
+              todoRemover: widget.todoRemover),
+        ),
+      ),
     );
   }
 }
