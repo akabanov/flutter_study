@@ -9,7 +9,9 @@ import 'rx_todo_repo_test.mocks.dart';
 @GenerateNiceMocks([MockSpec<TodoRepo>()])
 void main() {
   group('RX todo entity repo tests', () {
-    var todos = [FakeWebTodoRepo.todos.first];
+    var todos = [
+      TodoEntity(complete: true, id: '1', task: 'Rest', note: 'Thoroughly')
+    ];
     var originalTodo = todos.first;
     var updatedTodo = originalTodo.copyWith(complete: !originalTodo.complete);
     var newTodo =
