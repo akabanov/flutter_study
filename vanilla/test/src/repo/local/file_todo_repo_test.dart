@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vanilla/src/repo/repo_core.dart';
-import 'package:vanilla/src/repo/local/file_todo_repo.dart';
+import 'package:vanilla/src/repo/repo_local.dart';
 
 void main() {
   group('File repository for Todo entities', () {

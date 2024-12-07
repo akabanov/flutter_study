@@ -37,6 +37,7 @@ abstract class $FreezedEntityCopyWith<$Res> {
   factory $FreezedEntityCopyWith(
           FreezedEntity value, $Res Function(FreezedEntity) then) =
       _$FreezedEntityCopyWithImpl<$Res, FreezedEntity>;
+
   @useResult
   $Res call({String id});
 }
@@ -48,6 +49,7 @@ class _$FreezedEntityCopyWithImpl<$Res, $Val extends FreezedEntity>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -73,6 +75,7 @@ abstract class _$$FreezedEntityImplCopyWith<$Res>
   factory _$$FreezedEntityImplCopyWith(
           _$FreezedEntityImpl value, $Res Function(_$FreezedEntityImpl) then) =
       __$$FreezedEntityImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call({String id});

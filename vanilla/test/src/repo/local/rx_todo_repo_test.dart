@@ -1,9 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:vanilla/src/repo/local/fake_web_todo_repo.dart';
-import 'package:vanilla/src/repo/local/rx_todo_repo.dart';
 import 'package:vanilla/src/repo/repo_core.dart';
+import 'package:vanilla/src/repo/repo_local.dart';
 
 import 'rx_todo_repo_test.mocks.dart';
 

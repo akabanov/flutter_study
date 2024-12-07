@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vanilla/src/app.dart';
-import 'package:vanilla/src/repo/local/fake_web_todo_repo.dart';
+import 'package:vanilla/src/repo/repo_local.dart';
 
 void main() async {
   var repo = FakeWebTodoRepo();
