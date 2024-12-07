@@ -22,7 +22,8 @@ void main() {
   group('Shared prefs tests', () {
     test('Stores list of correct JSON strings', () async {
       var mockPrefs = MockSharedPreferencesAsync();
-      var sharedPrefsTodoRepo = SharedPrefsTodoRepo(key: key, prefs: mockPrefs);
+      var sharedPrefsTodoRepo =
+          SharedPrefsTodoRepo.withPrefs(key: key, prefs: mockPrefs);
       sharedPrefsTodoRepo.saveTodos(todos);
 
       verify(mockPrefs.setStringList(key, todoJsonList)).called(1);
@@ -30,7 +31,8 @@ void main() {
 
     test('Retrieves todos from the prefs list', () async {
       var mockPrefs = MockSharedPreferencesAsync();
-      var sharedPrefsTodoRepo = SharedPrefsTodoRepo(key: key, prefs: mockPrefs);
+      var sharedPrefsTodoRepo =
+          SharedPrefsTodoRepo.withPrefs(key: key, prefs: mockPrefs);
       when(mockPrefs.getStringList(key))
           .thenAnswer((_) => Future.value(todoJsonList));
 

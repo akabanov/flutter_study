@@ -7,7 +7,11 @@ class SharedPrefsTodoRepo implements TodoRepo {
   final String _key;
   final SharedPreferencesAsync _prefs;
 
-  SharedPrefsTodoRepo(
+  SharedPrefsTodoRepo({required String key})
+      : _key = key,
+        _prefs = SharedPreferencesAsync();
+
+  SharedPrefsTodoRepo.withPrefs(
       {required String key, required SharedPreferencesAsync prefs})
       : _key = key,
         _prefs = prefs;
