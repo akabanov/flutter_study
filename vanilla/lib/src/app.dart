@@ -34,7 +34,7 @@ class _AppState extends State<App> {
       onGenerateRoute: (settings) => switch (settings.name) {
         (TodoListScreen.routeName || _) => MaterialPageRoute(
             builder: (_) => TodoListScreen(
-              todoListState: _listState,
+              state: _listState,
               addTodo: addTodo,
               updateTodo: updateTodo,
               removeTodo: removeTodo,
