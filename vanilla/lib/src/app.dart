@@ -35,9 +35,9 @@ class _AppState extends State<App> {
         (TodoListScreen.routeName || _) => MaterialPageRoute(
             builder: (_) => TodoListScreen(
               todoListState: _listState,
-              todoAdder: addTodo,
-              todoUpdater: updateTodo,
-              todoRemover: removeTodo,
+              addTodo: addTodo,
+              updateTodo: updateTodo,
+              removeTodo: removeTodo,
             ),
           ),
       },
@@ -54,6 +54,14 @@ class _AppState extends State<App> {
 
   void removeTodo(TodoEntity expired) {
     updateTodoList(() => _listState.copyWithRemovedTodo(expired));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('${expired.task} removed'),
+      duration: Duration(seconds: 3),
+      action: SnackBarAction(
+        label: 'undo',
+        onPressed: () => addTodo(expired),
+      ),
+    ));
   }
 
   void updateTodoList(TodoListState Function() convert) {

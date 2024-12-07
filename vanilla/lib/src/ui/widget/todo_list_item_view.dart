@@ -5,28 +5,28 @@ import 'package:vanilla/src/ui/model/todo_list_state.dart';
 class TodoListItemView extends StatelessWidget {
   const TodoListItemView(
       {super.key,
-      required this.entity,
-      required this.todoUpdater,
-      required this.todoRemover});
+      required this.todo,
+      required this.updateTodo,
+      required this.removeTodo});
 
-  final TodoEntity entity;
-  final TodoAction todoUpdater;
-  final TodoAction todoRemover;
+  final TodoEntity todo;
+  final TodoAction updateTodo;
+  final TodoAction removeTodo;
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key('todo-list-item-${entity.id}'),
-      onDismissed: (_) => todoRemover(entity),
+      key: Key('todo-list-item-${todo.id}'),
+      onDismissed: (_) => removeTodo(todo),
       child: CheckboxListTile(
-        value: entity.complete,
+        value: todo.complete,
         onChanged: (complete) {
           if (complete != null) {
-            todoUpdater(entity.copyWith(complete: complete));
+            updateTodo(todo.copyWith(complete: complete));
           }
         },
-        title: Text(entity.task),
-        subtitle: Text(entity.note),
+        title: Text(todo.task),
+        subtitle: Text(todo.note),
         isThreeLine: true,
       ),
     );
