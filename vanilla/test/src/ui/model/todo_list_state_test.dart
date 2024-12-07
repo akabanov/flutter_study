@@ -39,6 +39,16 @@ void main() {
     });
   });
 
+  group('Todo list statistics tests', () {
+    test('Counts active todos', () async {
+      expect(TodoListState(todos).activeTodos, 3);
+    });
+
+    test('Counts completed todos', () async {
+      expect(TodoListState(todos).completedTodos, 1);
+    });
+  });
+
   group('Todo list update tests', () {
     test('Adds todo with a unique ID', () async {
       var newTodo = todos.first.copyWith(id: 'foo');

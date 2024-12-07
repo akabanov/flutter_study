@@ -55,6 +55,10 @@ class TodoListState extends Equatable {
     return TodoListState(todos.where((todo) => !todo.complete).toList());
   }
 
+  int get activeTodos => todos.where((todo) => !todo.complete).length;
+
+  int get completedTodos => todos.where((todo) => todo.complete).length;
+
   @override
   List<Object> get props => [status, _todos, error];
 }

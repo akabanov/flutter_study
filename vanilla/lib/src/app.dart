@@ -31,6 +31,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      restorationScopeId: 'todoApp',
       onGenerateRoute: (settings) => switch (settings.name) {
         (TodoListScreen.routeName || _) => MaterialPageRoute(
             builder: (_) => TodoListScreen(
@@ -54,14 +55,6 @@ class _AppState extends State<App> {
 
   void removeTodo(TodoEntity expired) {
     updateTodoList(() => _listState.copyWithRemovedTodo(expired));
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('${expired.task} removed'),
-      duration: Duration(seconds: 3),
-      action: SnackBarAction(
-        label: 'undo',
-        onPressed: () => addTodo(expired),
-      ),
-    ));
   }
 
   void updateTodoList(TodoListState Function() convert) {
