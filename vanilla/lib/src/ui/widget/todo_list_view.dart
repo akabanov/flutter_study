@@ -5,8 +5,12 @@ import 'package:vanilla/src/ui/widget/todo_list_item_view.dart';
 import 'package:vanilla/src/ui/widget/todo_stats_view.dart';
 
 class TodoListView extends StatefulWidget {
+  static const k = Key('todo-list-view');
+  static const listKey = Key('todo-list-list-view');
+  static const statsKey = Key('todo-list-stats-view');
+
   const TodoListView(
-      {super.key,
+      {super.key = const Key('todo-list-view'),
       required this.state,
       required this.addTodo,
       required this.updateTodo,
@@ -30,6 +34,8 @@ enum TodoListTab {
   final IconData iconOutlined;
 
   const TodoListTab(this.tooltip, this.icon, this.iconOutlined);
+
+  String get navDestinationKey => 'todo-list-nav-dst-$name';
 }
 
 class _TodoListViewState extends State<TodoListView> {
@@ -46,13 +52,14 @@ class _TodoListViewState extends State<TodoListView> {
       body: SafeArea(
         child: currentTab == 0
             ? ListView.builder(
+                key: TodoListView.listKey,
                 itemCount: todos.length,
                 itemBuilder: (_, index) => TodoListItemView(
                     todo: todos[index],
                     updateTodo: widget.updateTodo,
                     removeTodo: removeTodo),
               )
-            : TodoStatsView(state: widget.state),
+            : TodoStatsView(key: TodoListView.statsKey, state: widget.state),
       ),
       bottomNavigationBar: NavigationBar(
           selectedIndex: currentTab,
@@ -66,7 +73,7 @@ class _TodoListViewState extends State<TodoListView> {
           },
           destinations: TodoListTab.values
               .map((tab) => NavigationDestination(
-                    key: Key('todo-list-nav-btn-${tab.name}'),
+                    key: Key(tab.navDestinationKey),
                     icon: Icon(tab.icon),
                     selectedIcon: Icon(tab.iconOutlined),
                     tooltip: tab.tooltip,

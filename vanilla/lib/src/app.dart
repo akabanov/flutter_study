@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:vanilla/src/repo/core/todo_entity.dart';
 import 'package:vanilla/src/repo/core/todo_repo.dart';
 import 'package:vanilla/src/ui/model/todo_list_state.dart';
-import 'package:vanilla/src/ui/screen/todo_list_screen.dart';
+import 'package:vanilla/src/ui/screen/home_screen.dart';
 
 class App extends StatefulWidget {
-  const App({super.key, required this.todoRepo});
+  const App({super.key = const Key('app'), required this.todoRepo});
 
   final TodoRepo todoRepo;
 
@@ -31,16 +31,16 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      key: const Key('material-app'),
       restorationScopeId: 'todoApp',
-      onGenerateRoute: (settings) => switch (settings.name) {
-        (TodoListScreen.routeName || _) => MaterialPageRoute(
-            builder: (_) => TodoListScreen(
+      initialRoute: HomeScreen.routeName,
+      routes: {
+        HomeScreen.routeName: (context) => HomeScreen(
               state: _listState,
               addTodo: addTodo,
               updateTodo: updateTodo,
               removeTodo: removeTodo,
             ),
-          ),
       },
     );
   }
