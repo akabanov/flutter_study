@@ -38,19 +38,34 @@ enum TodoListTab {
   String get navDestinationKey => 'todo-list-nav-dst-$name';
 }
 
-class _TodoListViewState extends State<TodoListView> {
-  int currentTab = 0;
+class _TodoListViewState extends State<TodoListView> with RestorationMixin {
+  RestorableInt currentTab = RestorableInt(0);
+
+  @override
+  String get restorationId => 'todo-list-view';
+
+  @override
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    registerForRestoration(currentTab, 'tab-index');
+  }
+
+  @override
+  void dispose() {
+    currentTab.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     var todos = widget.state.todos;
+    var currentTabIndex = currentTab.value;
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Todo list'),
       ),
       body: SafeArea(
-        child: currentTab == 0
+        child: currentTabIndex == 0
             ? ListView.builder(
                 key: TodoListView.listKey,
                 itemCount: todos.length,
@@ -62,12 +77,12 @@ class _TodoListViewState extends State<TodoListView> {
             : TodoStatsView(key: TodoListView.statsKey, state: widget.state),
       ),
       bottomNavigationBar: NavigationBar(
-          selectedIndex: currentTab,
+          selectedIndex: currentTabIndex,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
           onDestinationSelected: (index) {
-            if (currentTab != index) {
+            if (currentTabIndex != index) {
               setState(() {
-                currentTab = index;
+                currentTab.value = index;
               });
             }
           },
