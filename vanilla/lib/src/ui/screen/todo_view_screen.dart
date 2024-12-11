@@ -3,8 +3,9 @@ import 'package:gap/gap.dart';
 import 'package:vanilla/src/repo/repo_core.dart';
 import 'package:vanilla/src/ui/model/todo_list_state.dart';
 
-class TodoViewScreen extends StatelessWidget {
-  static const k = GlobalObjectKey('todo-view-screen');
+class TodoViewScreen extends StatefulWidget {
+  static const k = Key('todo-view-screen');
+  static const deleteBtnKey = Key('todo-view-screen-delete-btn');
 
   const TodoViewScreen(
       {super.key = k,
@@ -17,14 +18,29 @@ class TodoViewScreen extends StatelessWidget {
   final TodoAction removeTodo;
 
   @override
+  State<TodoViewScreen> createState() => _TodoViewScreenState();
+}
+
+class _TodoViewScreenState extends State<TodoViewScreen> {
+  late TodoEntity _todo;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _todo = widget.todo;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('View task'),
         actions: [
           IconButton(
+            key: TodoViewScreen.deleteBtnKey,
             onPressed: () {
-              removeTodo(todo);
+              widget.removeTodo(_todo);
               Navigator.of(context).pop();
             },
             icon: Icon(Icons.delete),
@@ -38,10 +54,11 @@ class TodoViewScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Checkbox(
-              value: todo.complete,
-              onChanged: (complete) => updateTodo(
-                todo.copyWith(complete: complete ?? false),
-              ),
+              value: _todo.complete,
+              onChanged: (complete) => setState(() {
+                _todo = _todo.copyWith(complete: complete ?? false);
+                widget.updateTodo(_todo);
+              }),
             ),
             Gap(16),
             Expanded(
@@ -52,11 +69,11 @@ class TodoViewScreen extends StatelessWidget {
               children: [
                 Gap(8),
                 Text(
-                  todo.task,
+                  _todo.task,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Gap(16),
-                Text(todo.note),
+                Text(_todo.note),
               ],
             ))
           ],
