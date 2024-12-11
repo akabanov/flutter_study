@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vanilla/src/repo/repo_core.dart';
 import 'package:vanilla/src/ui/model/todo_list_state.dart';
-import 'package:vanilla/src/ui/widget/todo_list_item_view.dart';
+import 'package:vanilla/src/ui/widget/todo_list_item_tile.dart';
 import 'package:vanilla/src/ui/widget/todo_stats_view.dart';
 
 class TodoListView extends StatefulWidget {
@@ -69,7 +69,7 @@ class _TodoListViewState extends State<TodoListView> with RestorationMixin {
             ? ListView.builder(
                 key: TodoListView.listKey,
                 itemCount: todos.length,
-                itemBuilder: (_, index) => TodoListItemView(
+                itemBuilder: (_, index) => TodoListItemTile(
                     todo: todos[index],
                     updateTodo: widget.updateTodo,
                     removeTodo: removeTodo),

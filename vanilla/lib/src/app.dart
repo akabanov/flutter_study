@@ -46,21 +46,21 @@ class _AppState extends State<App> {
   }
 
   void addTodo(TodoEntity newTodo) {
-    updateTodoList(() => _listState.copyWithNewTodo(newTodo));
+    updateState(_listState.copyWithNewTodo(newTodo));
   }
 
   void updateTodo(TodoEntity update) {
-    updateTodoList(() => _listState.copyWithUpdatedTodo(update));
+    updateState(_listState.copyWithUpdatedTodo(update));
   }
 
   void removeTodo(TodoEntity expired) {
-    updateTodoList(() => _listState.copyWithRemovedTodo(expired));
+    updateState(_listState.copyWithRemovedTodo(expired));
   }
 
-  void updateTodoList(TodoListState Function() convert) {
+  void updateState(TodoListState newState) {
     setState(() {
-      _listState = convert();
-      widget.todoRepo.saveTodos(_listState.todos);
+      _listState = newState;
+      widget.todoRepo.saveTodos(newState.todos);
     });
   }
 }
