@@ -268,6 +268,15 @@ void main() {
       expect(find.text('New Task'), findsOne);
     });
 
+    testWidgets('The keyboard is visible', (t) async {
+      runApp(appWidget());
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(Key('add-todo-btn')));
+      await t.pumpAndSettle();
+
+      expect(t.testTextInput.isVisible, isTrue);
+    }, skip: true);
+
     testWidgets('Preserves entered values on restore', (t) async {
       runApp(appWidget());
       await t.pumpAndSettle();
