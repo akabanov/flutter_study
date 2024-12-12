@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vanilla/src/repo/repo_core.dart';
 import 'package:vanilla/src/ui/model/todo_list_state.dart';
+import 'package:vanilla/src/ui/screen/todo_edit_screen.dart';
 import 'package:vanilla/src/ui/widget/todo_list_item_tile.dart';
 import 'package:vanilla/src/ui/widget/todo_stats_view.dart';
 
@@ -64,18 +65,20 @@ class _TodoListViewState extends State<TodoListView> with RestorationMixin {
       appBar: AppBar(
         title: Text('Todo list'),
       ),
-      body: SafeArea(
-        child: currentTabIndex == 0
-            ? ListView.builder(
-                key: TodoListView.listKey,
-                itemCount: todos.length,
-                itemBuilder: (_, index) => TodoListItemTile(
-                    todo: todos[index],
-                    updateTodo: widget.updateTodo,
-                    removeTodo: removeTodo),
-              )
-            : TodoStatsView(key: TodoListView.statsKey, state: widget.state),
-      ),
+      body: currentTabIndex == 0
+          ? ListView.builder(
+              key: TodoListView.listKey,
+              itemCount: todos.length,
+              itemBuilder: (_, index) => TodoListItemTile(
+                  todo: todos[index],
+                  updateTodo: widget.updateTodo,
+                  removeTodo: removeTodo),
+            )
+          : TodoStatsView(key: TodoListView.statsKey, state: widget.state),
+      floatingActionButton: FloatingActionButton(
+          key: Key('add-todo-btn'),
+          onPressed: () =>
+              Navigator.of(context).pushNamed(TodoEditScreen.addRouteName)),
       bottomNavigationBar: NavigationBar(
           selectedIndex: currentTabIndex,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,

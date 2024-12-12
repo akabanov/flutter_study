@@ -3,6 +3,7 @@ import 'package:vanilla/src/repo/core/todo_entity.dart';
 import 'package:vanilla/src/repo/core/todo_repo.dart';
 import 'package:vanilla/src/ui/model/todo_list_state.dart';
 import 'package:vanilla/src/ui/screen/home_screen.dart';
+import 'package:vanilla/src/ui/screen/todo_edit_screen.dart';
 
 class App extends StatefulWidget {
   const App({super.key = const Key('app'), required this.todoRepo});
@@ -41,6 +42,8 @@ class _AppState extends State<App> {
               updateTodo: updateTodo,
               removeTodo: removeTodo,
             ),
+        TodoEditScreen.addRouteName: (context) =>
+            TodoEditScreen(saveTodo: addTodo)
       },
     );
   }

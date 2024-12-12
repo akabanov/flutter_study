@@ -29,32 +29,32 @@ void main() {
   ];
 
   group('App initialisation tests', () {
-    testWidgets('Initial screen snapshot', (tester) async {
+    testWidgets('Initial screen snapshot', (t) async {
       runApp(appWidget());
-      await tester.pumpAndSettle();
+      await t.pumpAndSettle();
 
       screenshot('initial-screen');
     });
 
-    testWidgets('Opens empty todo list by default', (tester) async {
+    testWidgets('Opens empty todo list by default', (t) async {
       runApp(appWidget());
-      await tester.pumpAndSettle();
+      await t.pumpAndSettle();
 
       expect(find.text('Todo list'), findsOne);
       expect(find.byType(Scrollable), findsOne);
       expect(find.byType(TodoListItemTile), findsNothing);
     });
 
-    testWidgets('Loads todos from the storage', (tester) async {
+    testWidgets('Loads todos from the storage', (t) async {
       runApp(appWidget(todos));
-      await tester.pumpAndSettle();
+      await t.pumpAndSettle();
 
       expect(find.byType(TodoListItemTile), findsExactly(2));
       expect(find.text('Rest'), findsOne);
       expect(find.text('Thoroughly'), findsOne);
     });
 
-    testWidgets('Crops long task names and notes', (tester) async {
+    testWidgets('Crops long task names and notes', (t) async {
       var longName =
           'Repeat multiple times (just need a long enough task name)';
       var longNote =
@@ -62,7 +62,7 @@ void main() {
       runApp(appWidget([
         TodoEntity(complete: false, id: '4', task: longName, note: longNote),
       ]));
-      await tester.pumpAndSettle();
+      await t.pumpAndSettle();
 
       var unboundTileText = find.descendant(
           of: find.byType(ListTile),
@@ -73,41 +73,41 @@ void main() {
     });
 
     testWidgets('Deletes todo by swiping and restores it using the snackbar',
-        (tester) async {
+        (t) async {
       runApp(appWidget(todos));
-      await tester.pumpAndSettle();
+      await t.pumpAndSettle();
 
-      await tester.drag(find.text('Rest'), Offset(200, 10));
-      await tester.pumpAndSettle();
+      await t.drag(find.text('Rest'), Offset(200, 10));
+      await t.pumpAndSettle();
 
       expect(find.text('Rest'), findsNothing);
       expect(find.text('Work'), findsOne);
 
-      await tester.tap(find.text('Undo'));
-      await tester.pumpAndSettle();
+      await t.tap(find.text('Undo'));
+      await t.pumpAndSettle();
 
       expect(find.text('Rest'), findsOne);
       expect(find.text('Work'), findsOne);
     });
 
-    testWidgets('Restoration: stats view', (tester) async {
+    testWidgets('Restoration: stats view', (t) async {
       runApp(appWidget());
-      await tester.pumpAndSettle();
+      await t.pumpAndSettle();
 
-      await tester.tap(find.byKey(Key(TodoListTab.stats.navDestinationKey)));
-      await tester.pumpAndSettle();
+      await t.tap(find.byKey(Key(TodoListTab.stats.navDestinationKey)));
+      await t.pumpAndSettle();
 
       expect(find.text('Completed todos'), findsOne);
-      await tester.restartAndRestore();
-      await tester.pumpAndSettle();
+      await t.restartAndRestore();
+      await t.pumpAndSettle();
 
       expect(find.text('Completed todos'), findsOne);
     });
 
-    testWidgets('Correct checkbox work in todo list', (tester) async {
+    testWidgets('Correct checkbox work in todo list', (t) async {
       var app = appWidget(todos);
       runApp(app);
-      await tester.pumpAndSettle();
+      await t.pumpAndSettle();
 
       var restTile =
           find.ancestor(of: find.text('Rest'), matching: find.byType(ListTile));
@@ -125,8 +125,8 @@ void main() {
               find.byWidgetPredicate((w) => w is Checkbox && w.value == false));
       expect(workCheckbox, findsOne);
 
-      await tester.tap(workCheckbox);
-      await tester.pumpAndSettle();
+      await t.tap(workCheckbox);
+      await t.pumpAndSettle();
       expect(workCheckbox, findsNothing);
 
       var list = await app.todoRepo.loadTodos();
@@ -136,13 +136,13 @@ void main() {
       }
     });
 
-    testWidgets('Tap on todo opens todo view screen', (tester) async {
+    testWidgets('Tap on todo opens todo view screen', (t) async {
       runApp(appWidget(todos));
-      await tester.pumpAndSettle();
+      await t.pumpAndSettle();
 
       var restFinder = find.text('Rest');
-      await tester.tap(restFinder);
-      await tester.pumpAndSettle();
+      await t.tap(restFinder);
+      await t.pumpAndSettle();
 
       expect(find.byKey(TodoViewScreen.k), findsOne);
       expect(restFinder, findsOne);
@@ -150,14 +150,14 @@ void main() {
   });
 
   group('Test todo view screen', () {
-    testWidgets('Displays todo details', (tester) async {
+    testWidgets('Displays todo details', (t) async {
       var app = appWidget(todos);
       runApp(app);
-      await tester.pumpAndSettle();
+      await t.pumpAndSettle();
 
       var todo = todos[0];
-      await tester.tap(find.text(todo.task));
-      await tester.pumpAndSettle();
+      await t.tap(find.text(todo.task));
+      await t.pumpAndSettle();
 
       expect(find.byKey(TodoListView.k), findsNothing);
       expect(find.text('View task'), findsOne);
@@ -165,39 +165,39 @@ void main() {
       expect(find.text(todo.note), findsOne);
     });
 
-    testWidgets('Checkbox works correctly', (tester) async {
+    testWidgets('Checkbox works correctly', (t) async {
       var app = appWidget(todos);
       runApp(app);
-      await tester.pumpAndSettle();
+      await t.pumpAndSettle();
 
       var todo = todos[0];
-      await tester.tap(find.text(todo.task));
-      await tester.pumpAndSettle();
+      await t.tap(find.text(todo.task));
+      await t.pumpAndSettle();
 
       var checkbox =
           find.byWidgetPredicate((w) => w is Checkbox && w.value == true);
       expect(checkbox, findsOne);
 
-      await tester.tap(checkbox);
-      await tester.pumpAndSettle();
+      await t.tap(checkbox);
+      await t.pumpAndSettle();
 
       expect(checkbox, findsNothing);
       var loaded = await app.todoRepo.loadTodos();
       expect(loaded[0].complete, isFalse);
     });
 
-    testWidgets('Deletes todo and returns to the list screen', (tester) async {
+    testWidgets('Deletes todo and returns to the list screen', (t) async {
       var app = appWidget(todos);
       runApp(app);
-      await tester.pumpAndSettle();
+      await t.pumpAndSettle();
 
       var todo = todos[0];
-      await tester.tap(find.text(todo.task));
-      await tester.pumpAndSettle();
+      await t.tap(find.text(todo.task));
+      await t.pumpAndSettle();
 
       var deleteButton = find.byKey(TodoViewScreen.deleteBtnKey);
-      await tester.tap(deleteButton);
-      await tester.pumpAndSettle();
+      await t.tap(deleteButton);
+      await t.pumpAndSettle();
 
       expect(find.byKey(TodoListView.k), findsOne);
       expect(find.text('Undo'), findsOne);
@@ -205,16 +205,27 @@ void main() {
       expect(loaded, isNot(contains(todo)));
     });
 
-    testWidgets('Restoration: path to todo view screen', (tester) async {
+    testWidgets('Restoration: path to todo view screen', (t) async {
       runApp(appWidget());
-      await tester.pumpAndSettle();
+      await t.pumpAndSettle();
 
       var todo = todos[0];
-      await tester.tap(find.text(todo.task));
-      await tester.pumpAndSettle();
+      await t.tap(find.text(todo.task));
+      await t.pumpAndSettle();
 
-      await tester.restartAndRestore();
+      await t.restartAndRestore();
       expect(find.byKey(TodoViewScreen.k), findsOne);
     }, skip: true);
+  });
+
+  group('Create todo tests', () {
+    testWidgets('Opens new todo screen from todo list screen', (t) async {
+      runApp(appWidget());
+      await t.pumpAndSettle();
+
+      await t.tap(find.byKey(Key('add-todo-btn')));
+      await t.pumpAndSettle();
+      expect(find.text('Add todo'), findsOne);
+    });
   });
 }
