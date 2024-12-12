@@ -76,9 +76,11 @@ class _TodoListViewState extends State<TodoListView> with RestorationMixin {
             )
           : TodoStatsView(key: TodoListView.statsKey, state: widget.state),
       floatingActionButton: FloatingActionButton(
-          key: Key('add-todo-btn'),
-          onPressed: () =>
-              Navigator.of(context).pushNamed(TodoEditScreen.addRouteName)),
+        key: Key('add-todo-btn'),
+        onPressed: () => Navigator.of(context)
+            .restorablePushNamed(TodoEditScreen.addRouteName),
+        child: Icon(Icons.add),
+      ),
       bottomNavigationBar: NavigationBar(
           selectedIndex: currentTabIndex,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,

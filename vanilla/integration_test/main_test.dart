@@ -90,7 +90,7 @@ void main() {
       expect(find.text('Work'), findsOne);
     });
 
-    testWidgets('Restoration: stats view', (t) async {
+    testWidgets('Stats view restoration', (t) async {
       runApp(appWidget());
       await t.pumpAndSettle();
 
@@ -99,7 +99,8 @@ void main() {
 
       expect(find.text('Completed todos'), findsOne);
       await t.restartAndRestore();
-      await t.pumpAndSettle();
+      await t.pump();
+      await t.pump();
 
       expect(find.text('Completed todos'), findsOne);
     });
@@ -214,6 +215,7 @@ void main() {
       await t.pumpAndSettle();
 
       await t.restartAndRestore();
+      await t.pumpAndSettle();
       expect(find.byKey(TodoViewScreen.k), findsOne);
     }, skip: true);
   });
@@ -226,6 +228,61 @@ void main() {
       await t.tap(find.byKey(Key('add-todo-btn')));
       await t.pumpAndSettle();
       expect(find.text('Add todo'), findsOne);
+    });
+
+    testWidgets('Creates todo and returns to todo list', (t) async {
+      runApp(appWidget());
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(Key('add-todo-btn')));
+      await t.pumpAndSettle();
+
+      var saveButton = find.byKey(Key('save-todo-btn'));
+      var taskFormField = find.byKey(Key('todo-task-form-field'));
+
+      // Verify that the save button is disabled when no task name is entered
+      expect(t.widget<FloatingActionButton>(saveButton).onPressed, isNull);
+
+      // Verify that the save button is disabled when empty text is entered
+      await t.enterText(taskFormField, '  \n  ');
+      await t.pumpAndSettle();
+      expect(t.widget<FloatingActionButton>(saveButton).onPressed, isNull);
+
+      // Enter a valid task name and verify the save button becomes enabled
+      await t.enterText(taskFormField, 'New Task');
+      await t.pumpAndSettle();
+      expect(t.widget<FloatingActionButton>(saveButton).onPressed, isNotNull);
+
+      // Verify that the save button is disabled again when empty text is entered
+      await t.enterText(taskFormField, ' ');
+      await t.pumpAndSettle();
+      expect(t.widget<FloatingActionButton>(saveButton).onPressed, isNull);
+
+      // Enter a valid task name again
+      await t.enterText(taskFormField, 'New Task');
+      await t.pumpAndSettle();
+      expect(t.widget<FloatingActionButton>(saveButton).onPressed, isNotNull);
+
+      await t.tap(saveButton);
+      await t.pumpAndSettle();
+      expect(find.text('Todo list'), findsOne);
+      expect(find.text('New Task'), findsOne);
+    });
+
+    testWidgets('Preserves entered values on restore', (t) async {
+      runApp(appWidget());
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(Key('add-todo-btn')));
+      await t.pump();
+      await t.pump();
+
+      var taskFormField = find.byKey(Key('todo-task-form-field'));
+      await t.enterText(taskFormField, 'New Task');
+      await t.pumpAndSettle();
+      expect(find.text('New Task'), findsOne);
+
+      await t.restartAndRestore();
+      expect(find.text('Add todo'), findsOne);
+      expect(find.text('New Task'), findsOne);
     });
   });
 }
