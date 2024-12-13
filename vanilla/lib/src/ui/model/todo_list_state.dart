@@ -35,6 +35,8 @@ class TodoListState extends Equatable {
     return _todos;
   }
 
+  TodoEntity get(String id) => todos.firstWhere((todo) => todo.id == id);
+
   TodoListState copyWithNewTodo(TodoEntity todo) {
     if (todos.any((test) => test.id == todo.id)) {
       throw StateError('Adding duplicate todo id ${todo.id}');

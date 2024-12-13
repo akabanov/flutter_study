@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class RepoErrorView extends StatelessWidget {
-  const RepoErrorView({super.key, required this.errorMessage});
+class LoadingErrorScreen extends StatelessWidget {
+  static const routeName = '/error';
+
+  const LoadingErrorScreen({super.key, required this.errorMessage});
 
   final String errorMessage;
 

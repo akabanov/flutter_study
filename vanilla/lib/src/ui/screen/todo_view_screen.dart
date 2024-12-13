@@ -1,47 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:vanilla/src/repo/repo_core.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:vanilla/src/ui/model/todo_list_state.dart';
 
-class TodoViewScreen extends StatefulWidget {
+class TodoViewScreen extends StatelessWidget {
   static const k = Key('todo-view-screen');
   static const deleteBtnKey = Key('todo-view-screen-delete-btn');
 
   const TodoViewScreen(
       {super.key = k,
-      required this.todo,
+      required this.todoId,
       required this.updateTodo,
       required this.removeTodo});
 
-  final TodoEntity todo;
+  final String todoId;
   final TodoAction updateTodo;
   final TodoAction removeTodo;
 
   @override
-  State<TodoViewScreen> createState() => _TodoViewScreenState();
-}
-
-class _TodoViewScreenState extends State<TodoViewScreen> {
-  late TodoEntity _todo;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _todo = widget.todo;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    var todo = Provider.of<TodoListState>(context, listen: true).get(todoId);
     return Scaffold(
       appBar: AppBar(
         title: Text('View task'),
         actions: [
           IconButton(
-            key: TodoViewScreen.deleteBtnKey,
+            key: deleteBtnKey,
             onPressed: () {
-              widget.removeTodo(_todo);
-              Navigator.of(context).pop();
+              removeTodo(todo);
+              GoRouter.of(context).pop();
             },
             icon: Icon(Icons.delete),
           ),
@@ -54,11 +42,11 @@ class _TodoViewScreenState extends State<TodoViewScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Checkbox(
-              value: _todo.complete,
-              onChanged: (complete) => setState(() {
-                _todo = _todo.copyWith(complete: complete ?? false);
-                widget.updateTodo(_todo);
-              }),
+              value: todo.complete,
+              onChanged: (complete) {
+                todo = todo.copyWith(complete: complete ?? false);
+                updateTodo(todo);
+              },
             ),
             Gap(16),
             Expanded(
@@ -69,11 +57,11 @@ class _TodoViewScreenState extends State<TodoViewScreen> {
               children: [
                 Gap(8),
                 Text(
-                  _todo.task,
+                  todo.task,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Gap(16),
-                Text(_todo.note),
+                Text(todo.note),
               ],
             ))
           ],

@@ -23,7 +23,7 @@ class TodoListItemTile extends StatelessWidget {
         onTap: () => Navigator.of(context).push(
           MaterialPageRoute(
               builder: (_) => TodoViewScreen(
-                    todo: todo,
+                    todoId: todo.id,
                     updateTodo: updateTodo,
                     removeTodo: removeTodo,
                   )),

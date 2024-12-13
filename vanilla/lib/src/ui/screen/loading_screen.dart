@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class LoadingTodoListView extends StatelessWidget {
-  const LoadingTodoListView({super.key});
+class LoadingScreen extends StatelessWidget {
+  static const routeName = '/loading';
+
+  const LoadingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

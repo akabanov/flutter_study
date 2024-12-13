@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
 import 'package:vanilla/src/repo/repo_core.dart';
 import 'package:vanilla/src/ui/model/todo_list_state.dart';
@@ -93,7 +94,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> with RestorationMixin {
                     task: _taskController.value.text.trim(),
                     note: _noteController.value.text.trim(),
                   ));
-                  Navigator.of(context).pop();
+                  GoRouter.of(context).pop();
                 }
               : null,
           child: Icon(Icons.check)),

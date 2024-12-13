@@ -4,9 +4,9 @@ import 'package:integration_test/integration_test.dart';
 import 'package:vanilla/src/app.dart';
 import 'package:vanilla/src/repo/core/todo_entity.dart';
 import 'package:vanilla/src/repo/local/in_memory_todo_repo.dart';
+import 'package:vanilla/src/ui/screen/todo_list_screen.dart';
 import 'package:vanilla/src/ui/screen/todo_view_screen.dart';
 import 'package:vanilla/src/ui/widget/todo_list_item_tile.dart';
-import 'package:vanilla/src/ui/widget/todo_list_view.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding binding =
@@ -160,7 +160,7 @@ void main() {
       await t.tap(find.text(todo.task));
       await t.pumpAndSettle();
 
-      expect(find.byKey(TodoListView.k), findsNothing);
+      expect(find.byKey(TodoListScreen.k), findsNothing);
       expect(find.text('View task'), findsOne);
       expect(find.text(todo.task), findsOne);
       expect(find.text(todo.note), findsOne);
@@ -200,7 +200,7 @@ void main() {
       await t.tap(deleteButton);
       await t.pumpAndSettle();
 
-      expect(find.byKey(TodoListView.k), findsOne);
+      expect(find.byKey(TodoListScreen.k), findsOne);
       expect(find.text('Undo'), findsOne);
       var loaded = await app.todoRepo.loadTodos();
       expect(loaded, isNot(contains(todo)));
