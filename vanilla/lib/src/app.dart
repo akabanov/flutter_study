@@ -22,23 +22,30 @@ class _AppState extends State<App> {
 
   late final _router = GoRouter(
     restorationScopeId: 'router',
-    initialLocation: TodoListScreen.routeName,
+    initialLocation: '/',
     routes: [
       GoRoute(
-          path: TodoListScreen.routeName,
+          path: '/',
           builder: (_, __) => TodoListScreen(
                 addTodo: addTodo,
                 updateTodo: updateTodo,
                 removeTodo: removeTodo,
-              )),
+              ),
+          routes: [
+            GoRoute(
+              path: 'add',
+              name: TodoEditScreen.addRouteName,
+              builder: (_, __) => TodoEditScreen(saveTodo: addTodo),
+            ),
+            // GoRoute(
+            //   path: 'view/:todoId',
+            // ),
+          ]),
       GoRoute(
-          path: LoadingErrorScreen.routeName,
+          path: '/error',
+          name: LoadingErrorScreen.routeName,
           builder: (_, __) =>
               LoadingErrorScreen(errorMessage: _listState.error)),
-      GoRoute(
-        path: TodoEditScreen.addRouteName,
-        builder: (_, __) => TodoEditScreen(saveTodo: addTodo),
-      )
     ],
   );
 
@@ -51,11 +58,10 @@ class _AppState extends State<App> {
         .loadTodos()
         .then((todos) => setState(() {
               _listState = TodoListState(todos);
-              _router.go(TodoListScreen.routeName);
             }))
         .catchError((error) => setState(() {
               _listState = TodoListState.error(error.toString());
-              _router.go(LoadingErrorScreen.routeName);
+              _router.goNamed(LoadingErrorScreen.routeName);
             }));
   }
 

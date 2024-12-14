@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LoadingErrorScreen extends StatelessWidget {
-  static const routeName = '/error';
+  static const routeName = 'error';
 
   const LoadingErrorScreen({super.key, required this.errorMessage});
 

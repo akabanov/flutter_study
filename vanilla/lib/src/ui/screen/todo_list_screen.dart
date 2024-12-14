@@ -83,7 +83,7 @@ class _TodoListScreenState extends State<TodoListScreen> with RestorationMixin {
       },
       floatingActionButton: FloatingActionButton(
         key: Key('add-todo-btn'),
-        onPressed: () => context.push(TodoEditScreen.addRouteName),
+        onPressed: () => context.goNamed(TodoEditScreen.addRouteName),
         child: Icon(Icons.add),
       ),
       bottomNavigationBar: NavigationBar(
