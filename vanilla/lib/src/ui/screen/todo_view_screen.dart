@@ -1,35 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
+import 'package:vanilla/src/repo/core/todo_entity.dart';
 import 'package:vanilla/src/ui/model/todo_list_state.dart';
 
-class TodoViewScreen extends StatelessWidget {
+class TodoViewScreen extends StatefulWidget {
   static const k = Key('todo-view-screen');
   static const deleteBtnKey = Key('todo-view-screen-delete-btn');
 
-  const TodoViewScreen(
-      {super.key = k,
-      required this.todoId,
-      required this.updateTodo,
-      required this.removeTodo});
+  const TodoViewScreen({
+    super.key = k,
+    required this.todo,
+    required this.updateTodo,
+    required this.removeTodo,
+  });
 
-  final String todoId;
+  final TodoEntity todo;
   final TodoAction updateTodo;
   final TodoAction removeTodo;
 
   @override
+  State<TodoViewScreen> createState() => _TodoViewScreenState();
+}
+
+class _TodoViewScreenState extends State<TodoViewScreen> {
+  late TodoEntity todo;
+
+  @override
+  void initState() {
+    super.initState();
+    todo = widget.todo;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var todo = Provider.of<TodoListState>(context, listen: true).get(todoId);
     return Scaffold(
       appBar: AppBar(
         title: Text('View task'),
         actions: [
           IconButton(
-            key: deleteBtnKey,
+            key: TodoViewScreen.deleteBtnKey,
             onPressed: () {
-              removeTodo(todo);
-              GoRouter.of(context).pop();
+              widget.removeTodo(todo);
+              context.pop();
             },
             icon: Icon(Icons.delete),
           ),
@@ -43,10 +56,10 @@ class TodoViewScreen extends StatelessWidget {
           children: [
             Checkbox(
               value: todo.complete,
-              onChanged: (complete) {
+              onChanged: (complete) => setState(() {
                 todo = todo.copyWith(complete: complete ?? false);
-                updateTodo(todo);
-              },
+                widget.updateTodo(todo);
+              }),
             ),
             Gap(16),
             Expanded(

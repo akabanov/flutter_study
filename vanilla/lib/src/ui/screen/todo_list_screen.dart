@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:vanilla/src/repo/repo_core.dart';
 import 'package:vanilla/src/ui/model/todo_list_state.dart';
 import 'package:vanilla/src/ui/screen/todo_edit_screen.dart';
+import 'package:vanilla/src/ui/widget/content_loading_view.dart';
 import 'package:vanilla/src/ui/widget/todo_list_item_tile.dart';
 import 'package:vanilla/src/ui/widget/todo_stats_view.dart';
 
@@ -15,7 +16,7 @@ class TodoListScreen extends StatefulWidget {
   static const routeName = '/';
 
   const TodoListScreen(
-      {super.key = const Key('home-screen'),
+      {super.key = k,
       required this.addTodo,
       required this.updateTodo,
       required this.removeTodo});
@@ -68,19 +69,21 @@ class _TodoListScreenState extends State<TodoListScreen> with RestorationMixin {
       appBar: AppBar(
         title: Text('Todo list'),
       ),
-      body: currentTabIndex == 0
-          ? ListView.builder(
-              key: TodoListScreen.listKey,
-              itemCount: todos.length,
-              itemBuilder: (_, index) => TodoListItemTile(
-                  todo: todos[index],
-                  updateTodo: (todo) => _update(widget.updateTodo, todo),
-                  removeTodo: removeTodo),
-            )
-          : TodoStatsView(key: TodoListScreen.statsKey, state: state),
+      body: switch ((state.status, currentTabIndex)) {
+        (TodoListStateStatus.loading, _) => ContentLoadingView(),
+        (_, 1) => TodoStatsView(key: TodoListScreen.statsKey, state: state),
+        _ => ListView.builder(
+            key: TodoListScreen.listKey,
+            itemCount: todos.length,
+            itemBuilder: (_, index) => TodoListItemTile(
+                todo: todos[index],
+                updateTodo: (todo) => _update(widget.updateTodo, todo),
+                removeTodo: removeTodo),
+          )
+      },
       floatingActionButton: FloatingActionButton(
         key: Key('add-todo-btn'),
-        onPressed: () => GoRouter.of(context).push(TodoEditScreen.addRouteName),
+        onPressed: () => context.push(TodoEditScreen.addRouteName),
         child: Icon(Icons.add),
       ),
       bottomNavigationBar: NavigationBar(

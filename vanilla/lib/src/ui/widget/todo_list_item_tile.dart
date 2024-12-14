@@ -20,14 +20,12 @@ class TodoListItemTile extends StatelessWidget {
       key: Key('todo-list-item-${todo.id}'),
       onDismissed: (_) => removeTodo(todo),
       child: ListTile(
-        onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(
-              builder: (_) => TodoViewScreen(
-                    todoId: todo.id,
-                    updateTodo: updateTodo,
-                    removeTodo: removeTodo,
-                  )),
-        ),
+        onTap: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (_) => TodoViewScreen(
+                  todo: todo,
+                  updateTodo: updateTodo,
+                  removeTodo: removeTodo,
+                ))),
         leading: Checkbox(
           value: todo.complete,
           onChanged: (complete) => updateTodo(

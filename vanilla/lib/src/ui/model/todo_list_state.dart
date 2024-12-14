@@ -29,9 +29,6 @@ class TodoListState extends Equatable {
         _todos = const [];
 
   List<TodoEntity> get todos {
-    if (status != TodoListStateStatus.ready) {
-      throw StateError(status.name);
-    }
     return _todos;
   }
 

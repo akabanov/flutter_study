@@ -16,11 +16,6 @@ const todos = [
 
 void main() {
   group('Todo list status tests', () {
-    test('Get todos throws error if state is not ready', () async {
-      expect(() => TodoListState.loading().todos, throwsStateError);
-      expect(() => TodoListState.error('error').todos, throwsStateError);
-    });
-
     test('Get todos returns todos if ready', () {
       expect(TodoListState(todos).todos, todos);
     });

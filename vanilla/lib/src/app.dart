@@ -5,7 +5,6 @@ import 'package:vanilla/src/repo/core/todo_entity.dart';
 import 'package:vanilla/src/repo/core/todo_repo.dart';
 import 'package:vanilla/src/ui/model/todo_list_state.dart';
 import 'package:vanilla/src/ui/screen/loading_error_screen.dart';
-import 'package:vanilla/src/ui/screen/loading_screen.dart';
 import 'package:vanilla/src/ui/screen/todo_edit_screen.dart';
 import 'package:vanilla/src/ui/screen/todo_list_screen.dart';
 
@@ -23,7 +22,7 @@ class _AppState extends State<App> {
 
   late final _router = GoRouter(
     restorationScopeId: 'router',
-    initialLocation: LoadingScreen.routeName,
+    initialLocation: TodoListScreen.routeName,
     routes: [
       GoRoute(
           path: TodoListScreen.routeName,
@@ -32,8 +31,6 @@ class _AppState extends State<App> {
                 updateTodo: updateTodo,
                 removeTodo: removeTodo,
               )),
-      GoRoute(
-          path: LoadingScreen.routeName, builder: (_, __) => LoadingScreen()),
       GoRoute(
           path: LoadingErrorScreen.routeName,
           builder: (_, __) =>

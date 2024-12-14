@@ -94,7 +94,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> with RestorationMixin {
                     task: _taskController.value.text.trim(),
                     note: _noteController.value.text.trim(),
                   ));
-                  GoRouter.of(context).pop();
+                  context.pop();
                 }
               : null,
           child: Icon(Icons.check)),
