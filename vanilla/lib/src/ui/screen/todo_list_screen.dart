@@ -44,6 +44,7 @@ enum TodoListTab {
 class _TodoListScreenState extends State<TodoListScreen> with RestorationMixin {
   RestorableInt currentTab = RestorableInt(0);
 
+
   @override
   String get restorationId => 'todo-list-screen';
 
