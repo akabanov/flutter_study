@@ -23,7 +23,7 @@ void main() {
     await binding.takeScreenshot(name);
   }
 
-  var todos = [
+  var todos = const [
     TodoEntity(complete: true, id: '42', task: 'Rest', note: 'Thoroughly'),
     TodoEntity(complete: false, id: '101', task: 'Work', note: 'Diligently'),
   ];
@@ -80,13 +80,19 @@ void main() {
       await t.drag(find.text('Rest'), Offset(200, 10));
       await t.pumpAndSettle();
 
-      expect(find.text('Rest'), findsNothing);
+      expect(
+          find.descendant(
+              of: find.byType(ListTile), matching: find.text('Rest')),
+          findsNothing);
       expect(find.text('Work'), findsOne);
 
       await t.tap(find.text('Undo'));
       await t.pumpAndSettle();
 
-      expect(find.text('Rest'), findsOne);
+      expect(
+          find.descendant(
+              of: find.byType(ListTile), matching: find.text('Rest')),
+          findsOne);
       expect(find.text('Work'), findsOne);
     });
 
@@ -207,17 +213,22 @@ void main() {
     });
 
     testWidgets('Restoration: path to todo view screen', (t) async {
-      runApp(appWidget());
+      runApp(appWidget(todos));
       await t.pumpAndSettle();
 
       var todo = todos[0];
       await t.tap(find.text(todo.task));
       await t.pumpAndSettle();
+      expect(find.byKey(TodoViewScreen.k), findsOne);
+      expect(find.text(todo.task), findsOne);
 
       await t.restartAndRestore();
       await t.pumpAndSettle();
+
       expect(find.byKey(TodoViewScreen.k), findsOne);
-    }, skip: true);
+      expect(find.text(todo.task), findsOne);
+      expect(find.text(todo.note), findsOne);
+    });
   });
 
   group('Create todo tests', () {

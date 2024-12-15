@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:vanilla/src/repo/core/todo_entity.dart';
 import 'package:vanilla/src/ui/model/todo_list_state.dart';
+import 'package:vanilla/src/ui/widget/content_loading_view.dart';
 
 class TodoViewScreen extends StatefulWidget {
+  static const routeName = 'viewTodo';
+
   static const k = Key('todo-view-screen');
   static const deleteBtnKey = Key('todo-view-screen-delete-btn');
 
   const TodoViewScreen({
-    super.key = k,
-    required this.todo,
+    required this.todoId,
     required this.updateTodo,
     required this.removeTodo,
-  });
+  }) : super(key: k);
 
-  final TodoEntity todo;
+  final String todoId;
   final TodoAction updateTodo;
   final TodoAction removeTodo;
 
@@ -24,26 +27,28 @@ class TodoViewScreen extends StatefulWidget {
 }
 
 class _TodoViewScreenState extends State<TodoViewScreen> {
-  late TodoEntity todo;
-
-  @override
-  void initState() {
-    super.initState();
-    todo = widget.todo;
-  }
-
   @override
   Widget build(BuildContext context) {
+    var state = Provider.of<TodoListState>(context, listen: true);
+
+    TodoEntity? todo = state.get(widget.todoId);
+    if (todo == null) {
+      return Scaffold(
+        appBar: AppBar(title: Text('View task')),
+        body: ContentLoadingView(),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('View task'),
         actions: [
           IconButton(
             key: TodoViewScreen.deleteBtnKey,
-            onPressed: () {
+            onPressed: () => setState(() {
               widget.removeTodo(todo);
               context.pop();
-            },
+            }),
             icon: Icon(Icons.delete),
           ),
         ],
@@ -57,26 +62,26 @@ class _TodoViewScreenState extends State<TodoViewScreen> {
             Checkbox(
               value: todo.complete,
               onChanged: (complete) => setState(() {
-                todo = todo.copyWith(complete: complete ?? false);
-                widget.updateTodo(todo);
+                widget.updateTodo(todo.copyWith(complete: complete ?? false));
               }),
             ),
             Gap(16),
             Expanded(
-                child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Gap(8),
-                Text(
-                  todo.task,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                Gap(16),
-                Text(todo.note),
-              ],
-            ))
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Gap(8),
+                  Text(
+                    todo.task,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  Gap(16),
+                  Text(todo.note),
+                ],
+              ),
+            ),
           ],
         ),
       ),

@@ -3,13 +3,15 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:vanilla/src/repo/core/todo_entity.dart';
 import 'package:vanilla/src/repo/core/todo_repo.dart';
+import 'package:vanilla/src/scaffold_messenger_access.dart';
 import 'package:vanilla/src/ui/model/todo_list_state.dart';
 import 'package:vanilla/src/ui/screen/loading_error_screen.dart';
 import 'package:vanilla/src/ui/screen/todo_edit_screen.dart';
 import 'package:vanilla/src/ui/screen/todo_list_screen.dart';
+import 'package:vanilla/src/ui/screen/todo_view_screen.dart';
 
 class App extends StatefulWidget {
-  const App({super.key = const Key('app'), required this.todoRepo});
+  App({super.key = const Key('app'), required this.todoRepo});
 
   final TodoRepo todoRepo;
 
@@ -37,9 +39,14 @@ class _AppState extends State<App> {
               name: TodoEditScreen.addRouteName,
               builder: (_, __) => TodoEditScreen(saveTodo: addTodo),
             ),
-            // GoRoute(
-            //   path: 'view/:todoId',
-            // ),
+            GoRoute(
+                path: 'view/:todoId',
+                name: TodoViewScreen.routeName,
+                builder: (_, state) => TodoViewScreen(
+                      todoId: state.pathParameters['todoId']!,
+                      updateTodo: updateTodo,
+                      removeTodo: removeTodo,
+                    )),
           ]),
       GoRoute(
           path: '/error',
@@ -73,6 +80,7 @@ class _AppState extends State<App> {
         key: const Key('material-app'),
         restorationScopeId: 'todoApp',
         routerConfig: _router,
+        scaffoldMessengerKey: ScaffoldMessengerAccess.rootScaffoldMessengerKey,
       ),
     );
   }
@@ -87,6 +95,15 @@ class _AppState extends State<App> {
 
   void removeTodo(TodoEntity expired) {
     updateState(_listState.copyWithRemovedTodo(expired));
+
+    ScaffoldMessengerAccess.tryShowSnackBar(SnackBar(
+      content: Text('"${expired.task}" removed'),
+      duration: Duration(seconds: 3),
+      action: SnackBarAction(
+        label: 'Undo',
+        onPressed: () => addTodo(expired),
+      ),
+    ));
   }
 
   void updateState(TodoListState newState) {

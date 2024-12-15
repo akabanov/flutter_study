@@ -32,7 +32,10 @@ class TodoListState extends Equatable {
     return _todos;
   }
 
-  TodoEntity get(String id) => todos.firstWhere((todo) => todo.id == id);
+  bool get ready => status == TodoListStateStatus.ready;
+
+  TodoEntity? get(String id) =>
+      todos.where((todo) => todo.id == id).firstOrNull;
 
   TodoListState copyWithNewTodo(TodoEntity todo) {
     if (todos.any((test) => test.id == todo.id)) {

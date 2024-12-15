@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vanilla/src/repo/repo_core.dart';
 import 'package:vanilla/src/ui/model/todo_list_state.dart';
 import 'package:vanilla/src/ui/screen/todo_view_screen.dart';
@@ -20,12 +21,8 @@ class TodoListItemTile extends StatelessWidget {
       key: Key('todo-list-item-${todo.id}'),
       onDismissed: (_) => removeTodo(todo),
       child: ListTile(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (_) => TodoViewScreen(
-                  todo: todo,
-                  updateTodo: updateTodo,
-                  removeTodo: removeTodo,
-                ))),
+        onTap: () => context.goNamed(TodoViewScreen.routeName,
+            pathParameters: {'todoId': todo.id}),
         leading: Checkbox(
           value: todo.complete,
           onChanged: (complete) => updateTodo(

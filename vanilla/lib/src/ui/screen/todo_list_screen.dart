@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:vanilla/src/repo/repo_core.dart';
 import 'package:vanilla/src/ui/model/todo_list_state.dart';
 import 'package:vanilla/src/ui/screen/todo_edit_screen.dart';
 import 'package:vanilla/src/ui/widget/content_loading_view.dart';
@@ -76,9 +75,14 @@ class _TodoListScreenState extends State<TodoListScreen> with RestorationMixin {
             key: TodoListScreen.listKey,
             itemCount: todos.length,
             itemBuilder: (_, index) => TodoListItemTile(
-                todo: todos[index],
-                updateTodo: (todo) => _update(widget.updateTodo, todo),
-                removeTodo: removeTodo),
+              todo: todos[index],
+              updateTodo: (todo) => setState(() {
+                widget.updateTodo(todo);
+              }),
+              removeTodo: (todo) => setState(() {
+                widget.removeTodo(todo);
+              }),
+            ),
           )
       },
       floatingActionButton: FloatingActionButton(
@@ -106,23 +110,5 @@ class _TodoListScreenState extends State<TodoListScreen> with RestorationMixin {
                   ))
               .toList()),
     );
-  }
-
-  void removeTodo(TodoEntity expired) {
-    _update(widget.removeTodo, expired);
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('"${expired.task}" removed'),
-      duration: Duration(seconds: 3),
-      action: SnackBarAction(
-        label: 'Undo',
-        onPressed: () => _update(widget.addTodo, expired),
-      ),
-    ));
-  }
-
-  void _update(TodoAction action, TodoEntity todo) {
-    setState(() {
-      action(todo);
-    });
   }
 }

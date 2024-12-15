@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:vanilla/src/repo/repo_core.dart';
 import 'package:vanilla/src/ui/model/todo_list_state.dart';
 
@@ -9,9 +8,8 @@ class TodoEditScreen extends StatefulWidget {
   static const addRouteName = 'addTodo';
   static const updateRouteName = 'updateTodo';
 
-  const TodoEditScreen({super.key, required this.saveTodo, this.todoId});
+  const TodoEditScreen({super.key, required this.saveTodo});
 
-  final String? todoId;
   final TodoAction saveTodo;
 
   @override
@@ -31,13 +29,9 @@ class _TodoEditScreenState extends State<TodoEditScreen> with RestorationMixin {
   void initState() {
     super.initState();
 
-    var todoId = widget.todoId;
-    var state = context.read<TodoListState>();
+    _create = true;
+    _template = TodoEntity.seed();
 
-    _create = todoId == null;
-    _template = todoId != null && state.status == TodoListStateStatus.ready
-        ? state.get(todoId)
-        : TodoEntity.seed();
     _taskController = RestorableTextEditingController(text: _template.task);
     _noteController = RestorableTextEditingController(text: _template.note);
   }
