@@ -1,20 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router_study/src/routes.dart';
+import 'package:gor/on_exit.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const OEApp());
 }
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Go Router Study App',
-      routerConfig: Routes.routes,
-    );
-  }
-}
-
