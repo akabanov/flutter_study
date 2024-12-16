@@ -17,7 +17,7 @@ void main() {
       var settingsScreen = find.byKey(Key('settings-screen'));
 
       // test init
-      await t.pumpWidget(const OEApp());
+      await t.pumpWidget(OEApp());
       expect(homeScreen, findsOne);
       expect(goHomeBtn, findsNothing);
       expect(goDetailsBtn, findsOne);
