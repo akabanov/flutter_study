@@ -79,7 +79,7 @@ class OEApp extends StatelessWidget {
 
   final _router = GoRouter(
       debugLogDiagnostics: true,
-      restorationScopeId: 'router',
+      restorationScopeId: 'router', // <-- restoration worked without this one
       routes: [
         GoRoute(path: '/', builder: (_, __) => OEHomeScreen(), routes: [
           GoRoute(
@@ -114,7 +114,6 @@ class OEApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Go Router Study App',
-      debugShowCheckedModeBanner: true,
       routerConfig: _router,
       restorationScopeId: 'app',
     );
