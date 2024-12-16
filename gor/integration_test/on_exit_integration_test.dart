@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gor/on_exit.dart';
+import 'package:integration_test/integration_test.dart';
 
 void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
   group('On Exit study tests', () {
     testWidgets('Full path', (t) async {
+      // finders
       var goHomeBtn = find.text('Go home');
       var goDetailsBtn = find.text('Go details');
       var goSettingsBtn = find.text('Go settings');
@@ -16,8 +20,11 @@ void main() {
       var detailsScreen = find.byKey(Key('details-screen'));
       var settingsScreen = find.byKey(Key('settings-screen'));
 
+      // launch and wait
+      runApp(OEApp());
+      await t.pumpAndSettle();
+
       // test init
-      await t.pumpWidget(OEApp());
       expect(homeScreen, findsOne);
       expect(goHomeBtn, findsNothing);
       expect(goDetailsBtn, findsOne);

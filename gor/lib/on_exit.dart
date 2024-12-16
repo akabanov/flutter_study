@@ -77,34 +77,37 @@ class OESettingsScreen extends StatelessWidget {
 class OEApp extends StatelessWidget {
   OEApp({super.key});
 
-  final _router = GoRouter(debugLogDiagnostics: true, restorationScopeId: 'router', routes: [
-    GoRoute(path: '/', builder: (_, __) => OEHomeScreen(), routes: [
-      GoRoute(
-        path: 'details',
-        builder: (_, __) => OEDetailsScreen(),
-        // onExit: null,
-        onExit: (context, _) async => await showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text('Confirm'),
-            contentPadding: EdgeInsets.all(32),
-            content: Text('Sure you really want to exit??'),
-            actions: [
-              TextButton(
-                  key: Key('no'),
-                  onPressed: () => context.pop(false),
-                  child: Text('Not really')),
-              TextButton(
-                  key: Key('yes'),
-                  onPressed: () => context.pop(true),
-                  child: Text('Definately!!'))
-            ],
+  final _router = GoRouter(
+      debugLogDiagnostics: true,
+      restorationScopeId: 'router',
+      routes: [
+        GoRoute(path: '/', builder: (_, __) => OEHomeScreen(), routes: [
+          GoRoute(
+            path: 'details',
+            builder: (_, __) => OEDetailsScreen(),
+            // onExit: null,
+            onExit: (context, _) async => await showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text('Confirm'),
+                contentPadding: EdgeInsets.all(32),
+                content: Text('Sure you really want to exit??'),
+                actions: [
+                  TextButton(
+                      key: Key('no'),
+                      onPressed: () => context.pop(false),
+                      child: Text('Not really')),
+                  TextButton(
+                      key: Key('yes'),
+                      onPressed: () => context.pop(true),
+                      child: Text('Definately!!'))
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
-      GoRoute(path: 'settings', builder: (_, __) => OESettingsScreen())
-    ])
-  ]);
+          GoRoute(path: 'settings', builder: (_, __) => OESettingsScreen())
+        ])
+      ]);
 
   // This widget is the root of your application.
   @override
