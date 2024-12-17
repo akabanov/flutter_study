@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gor/on_exit.dart';
+import 'package:gor/route/on_exit.dart';
 
 void main() {
   group('On Exit study tests', () {

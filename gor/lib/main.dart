@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gor/on_exit.dart';
+import 'package:gor/generic/inherited/iw_app.dart';
 
 void main() {
-  runApp(OEApp());
+  runApp(IWApp());
+  // runApp(OEApp());
 }
