@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gor/generic/inherited/iw_app.dart';
+import 'package:gor/route/async_redirect.dart';
 
 void main() {
-  runApp(IWApp());
+  runApp(ARApp());
+  // runApp(IWApp());
   // runApp(OEApp());
 }
