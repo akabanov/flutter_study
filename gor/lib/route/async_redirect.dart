@@ -11,6 +11,7 @@ class ARApp extends StatelessWidget {
   static const title = 'Async Redirect Study';
 
   final _router = GoRouter(
+      debugLogDiagnostics: true,
       restorationScopeId: 'router',
       initialLocation: '/',
       routes: [
@@ -34,18 +35,19 @@ class ARApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamAuthScope(
-        child: MaterialApp.router(
-      title: title,
-      restorationScopeId: 'app',
-      routerConfig: _router,
-    ));
+      child: MaterialApp.router(
+        title: title,
+        restorationScopeId: 'app',
+        routerConfig: _router,
+      ),
+    );
   }
 }
 
 // ------------
 
 class ARHomeScreen extends StatelessWidget {
-  const ARHomeScreen({super.key});
+  const ARHomeScreen() : super(key: const Key('home-screen'));
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +55,13 @@ class ARHomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Classified'),
+        title: Text(ARApp.title),
         actions: [
-          IconButton(onPressed: streamAuth.signOut, icon: Icon(Icons.logout))
+          IconButton(
+            key: Key('logout-btn'),
+            onPressed: streamAuth.signOut,
+            icon: Icon(Icons.logout),
+          )
         ],
       ),
       body:
@@ -67,7 +73,7 @@ class ARHomeScreen extends StatelessWidget {
 // --------------
 
 class ARLoginScreen extends StatefulWidget {
-  const ARLoginScreen({super.key});
+  const ARLoginScreen() : super(key: const Key('login-screen'));
 
   @override
   State<ARLoginScreen> createState() => _ARLoginScreenState();
@@ -108,9 +114,12 @@ class _ARLoginScreenState extends State<ARLoginScreen>
                   value: _animationController.value,
                 )
               : ElevatedButton(
+                  key: Key('login-btn'),
                   onPressed: () async {
-                    _authStarted = true;
-                    await streamAuth.login('Alex');
+                    streamAuth.login('Alex');
+                    setState(() {
+                      _authStarted = true;
+                    });
                   },
                   child: Text('Login'),
                 )),
@@ -176,8 +185,9 @@ class StreamAuth {
     _authStreamController.add(null);
   }
 
-  void dispose() {
+  void dispose() async {
     _logoutTimer?.cancel();
-    _authStreamController.close();
+    _logoutTimer = null;
+    await _authStreamController.close();
   }
 }
