@@ -65,7 +65,7 @@ class OESettingsScreen extends StatelessWidget {
             TextButton(
                 onPressed: () => context.go('/'), child: Text('Go home')),
             TextButton(
-                onPressed: () => context.go('/details'),
+                onPressed: () => context.goNamed('/details'),
                 child: Text('Go details')),
           ],
         ),
