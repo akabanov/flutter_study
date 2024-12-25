@@ -15,8 +15,8 @@ class ARApp extends StatelessWidget {
       restorationScopeId: 'router',
       initialLocation: '/',
       routes: [
-        GoRoute(path: '/', builder: (_, __) => ARHomeScreen()),
-        GoRoute(path: '/login', builder: (_, __) => ARLoginScreen())
+        GoRoute(path: '/', builder: (_, __) => const ARHomeScreen()),
+        GoRoute(path: '/login', builder: (_, __) => const ARLoginScreen())
       ],
       redirect: (context, state) {
         var streamAuth = StreamAuthScope.of(context);
@@ -55,12 +55,12 @@ class ARHomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(ARApp.title),
+        title: const Text(ARApp.title),
         actions: [
           IconButton(
-            key: Key('logout-btn'),
+            key: const Key('logout-btn'),
             onPressed: streamAuth.signOut,
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
           )
         ],
       ),
@@ -88,7 +88,7 @@ class _ARLoginScreenState extends State<ARLoginScreen>
   void initState() {
     super.initState();
     _animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 1))
+        AnimationController(vsync: this, duration: const Duration(seconds: 1))
           ..addListener(() => setState(() {}))
           ..repeat();
   }
@@ -106,7 +106,7 @@ class _ARLoginScreenState extends State<ARLoginScreen>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: const Text('Login'),
       ),
       body: Center(
           child: _authStarted
@@ -114,14 +114,14 @@ class _ARLoginScreenState extends State<ARLoginScreen>
                   value: _animationController.value,
                 )
               : ElevatedButton(
-                  key: Key('login-btn'),
+                  key: const Key('login-btn'),
                   onPressed: () async {
                     streamAuth.login('Alex');
                     setState(() {
                       _authStarted = true;
                     });
                   },
-                  child: Text('Login'),
+                  child: const Text('Login'),
                 )),
     );
   }
@@ -173,7 +173,7 @@ class StreamAuth {
   final int sessionDuration;
   Timer? _logoutTimer;
 
-  Future<void> login(String user) => Future.delayed(Duration(seconds: 1), () {
+  Future<void> login(String user) => Future.delayed(const Duration(seconds: 1), () {
         _logoutTimer?.cancel();
         _authStreamController.add(user);
         _logoutTimer = Timer(Duration(seconds: sessionDuration), signOut);

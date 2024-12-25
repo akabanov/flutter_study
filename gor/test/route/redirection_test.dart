@@ -18,10 +18,10 @@ class RTApp extends StatelessWidget {
         return null;
       },
       routes: [
-        GoRoute(path: '/', builder: (_, __) => Placeholder(), routes: [
+        GoRoute(path: '/', builder: (_, __) => const Placeholder(), routes: [
           GoRoute(
               path: 'a',
-              builder: (_, __) => Placeholder(),
+              builder: (_, __) => const Placeholder(),
               redirect: (_, __) {
                 mc++;
                 checkingOrder.add('a');
@@ -30,7 +30,7 @@ class RTApp extends StatelessWidget {
               routes: [
                 GoRoute(
                   path: 'b',
-                  builder: (_, __) => Placeholder(),
+                  builder: (_, __) => const Placeholder(),
                   redirect: (_, __) {
                     lc++;
                     checkingOrder.add('b');

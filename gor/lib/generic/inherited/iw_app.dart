@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class IWApp extends StatefulWidget {
-  IWApp({super.key});
+  const IWApp({super.key});
 
   static const from = 10;
 
@@ -39,7 +39,7 @@ class _IWAppState extends State<IWApp> {
       home: IWInheritedGreeting(
           child: IWCounterNotifier(
         notifier: counter,
-        child: IWCounterDisplay(),
+        child: const IWCounterDisplay(),
       )),
     );
   }
@@ -67,7 +67,7 @@ class IWInheritedGreeting extends InheritedWidget {
 }
 
 class IWCounterNotifier extends InheritedNotifier<ValueNotifier<int>> {
-  IWCounterNotifier({super.key, required super.notifier, required super.child});
+  const IWCounterNotifier({super.key, required super.notifier, required super.child});
 }
 
 class IWCounterDisplay extends StatelessWidget {
@@ -77,7 +77,7 @@ class IWCounterDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inheritance study app'),
+        title: const Text('Inheritance study app'),
       ),
       body: Center(
         child: Column(
@@ -87,7 +87,7 @@ class IWCounterDisplay extends StatelessWidget {
               IWInheritedGreeting.of(context).greeting,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            Gap(24),
+            const Gap(24),
             Text(
               context
                       .dependOnInheritedWidgetOfExactType<IWCounterNotifier>()

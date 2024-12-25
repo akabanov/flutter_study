@@ -6,18 +6,18 @@ void main() {
   group('Sync redirect studying', () {
     testWidgets('Full route', (t) async {
       await t.pumpWidget(SRApp());
-      expect(find.byKey(Key('home-screen')), findsNothing);
-      expect(find.byKey(Key('login-screen')), findsOne);
+      expect(find.byKey(const Key('home-screen')), findsNothing);
+      expect(find.byKey(const Key('login-screen')), findsOne);
 
-      await t.tap(find.byKey(Key('login-btn')));
+      await t.tap(find.byKey(const Key('login-btn')));
       await t.pumpAndSettle();
-      expect(find.byKey(Key('home-screen')), findsOne);
-      expect(find.byKey(Key('login-screen')), findsNothing);
+      expect(find.byKey(const Key('home-screen')), findsOne);
+      expect(find.byKey(const Key('login-screen')), findsNothing);
 
-      await t.tap(find.byKey(Key('logout-btn')));
+      await t.tap(find.byKey(const Key('logout-btn')));
       await t.pumpAndSettle();
-      expect(find.byKey(Key('home-screen')), findsNothing);
-      expect(find.byKey(Key('login-screen')), findsOne);
+      expect(find.byKey(const Key('home-screen')), findsNothing);
+      expect(find.byKey(const Key('login-screen')), findsOne);
     });
   });
 }

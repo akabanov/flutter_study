@@ -1,7 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+class CounterHome extends StatelessWidget {
+  CounterHome({required this.counterName})
+      : super(key: Key('${counterName.toLowerCase()}-home-screen'));
+
+  final String counterName;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('$counterName Counter Home'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+            onPressed: () =>
+                context.go('/${counterName.toLowerCase()}/counter'),
+            child: Text('Go Count $counterName!')),
+      ),
+    );
+  }
+}
 
 class Counter extends StatefulWidget {
-  const Counter({super.key, required this.counterName});
+  Counter({required this.counterName})
+      : super(key: Key('${counterName.toLowerCase()}-counter-screen'));
 
   final String counterName;
 
@@ -36,8 +60,7 @@ class _CounterState extends State<Counter> with RestorationMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.counterName),
+        title: Text('${widget.counterName} Counter'),
       ),
       body: Center(
         child: Column(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gor/route/conter.dart';
+import 'package:gor/route/screen/conter.dart';
 
 final rootNavKey = GlobalKey<NavigatorState>();
 final shellNavKey = GlobalKey<NavigatorState>();
@@ -49,8 +49,8 @@ class ShellRouteApp extends StatelessWidget {
 }
 
 class ShellRouteAppScaffold extends StatelessWidget {
-  ShellRouteAppScaffold(this.child, this.location)
-      : super(key: Key('app-shell'));
+  const ShellRouteAppScaffold(this.child, this.location)
+      : super(key: const Key('app-shell'));
 
   final String location;
   final Widget child;
@@ -67,7 +67,7 @@ class ShellRouteAppScaffold extends StatelessWidget {
       body: child,
       bottomNavigationBar: NavigationBar(
           selectedIndex: index,
-          destinations: [
+          destinations: const [
             NavigationDestination(
               key: Key('a-tab-btn'),
               icon: Icon(Icons.list),

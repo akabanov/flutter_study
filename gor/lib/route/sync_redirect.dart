@@ -6,7 +6,7 @@ class SRAuthState extends ChangeNotifier {
   String get currentUser => _user;
   String _user = '';
 
-  bool get isLoggedIn => !_user.isEmpty;
+  bool get isLoggedIn => _user.isNotEmpty;
 
   void login(String user) {
     _user = user;
@@ -33,9 +33,9 @@ class SRApp extends StatelessWidget {
     routes: [
       GoRoute(
         path: '/',
-        builder: (_, __) => SRHomeScreen(),
+        builder: (_, __) => const SRHomeScreen(),
       ),
-      GoRoute(path: '/login', builder: (_, __) => SRLoginScreen()),
+      GoRoute(path: '/login', builder: (_, __) => const SRLoginScreen()),
     ],
     redirect: (context, state) {
       var matchedLocation = state.matchedLocation;
@@ -68,12 +68,12 @@ class SRHomeScreen extends StatelessWidget {
     var authState = context.read<SRAuthState>();
     return Scaffold(
       appBar: AppBar(
-        title: Text(SRApp.appTitle),
+        title: const Text(SRApp.appTitle),
         actions: [
           IconButton(
-            key: Key('logout-btn'),
+            key: const Key('logout-btn'),
             onPressed: authState.logout,
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             tooltip: 'Logout',
           )
         ],
@@ -95,13 +95,13 @@ class SRLoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(SRApp.appTitle),
+        title: const Text(SRApp.appTitle),
       ),
       body: Center(
         child: ElevatedButton(
-            key: Key('login-btn'),
+            key: const Key('login-btn'),
             onPressed: () => context.read<SRAuthState>().login('Alex'),
-            child: Text('Login')),
+            child: const Text('Login')),
       ),
     );
   }

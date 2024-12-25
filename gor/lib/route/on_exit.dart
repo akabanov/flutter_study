@@ -8,7 +8,7 @@ class OEHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: const Text('Home'),
       ),
       body: Center(
         child: Column(
@@ -16,7 +16,7 @@ class OEHomeScreen extends StatelessWidget {
           children: [
             TextButton(
                 onPressed: () => context.go('/details'),
-                child: Text('Go details'))
+                child: const Text('Go details'))
           ],
         ),
       ),
@@ -31,17 +31,17 @@ class OEDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Details'),
+        title: const Text('Details'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextButton(
-                onPressed: () => context.go('/'), child: Text('Go home')),
+                onPressed: () => context.go('/'), child: const Text('Go home')),
             TextButton(
                 onPressed: () => context.go('/settings'),
-                child: Text('Go settings')),
+                child: const Text('Go settings')),
           ],
         ),
       ),
@@ -56,17 +56,17 @@ class OESettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: const Text('Settings'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextButton(
-                onPressed: () => context.go('/'), child: Text('Go home')),
+                onPressed: () => context.go('/'), child: const Text('Go home')),
             TextButton(
                 onPressed: () => context.goNamed('/details'),
-                child: Text('Go details')),
+                child: const Text('Go details')),
           ],
         ),
       ),
@@ -81,31 +81,31 @@ class OEApp extends StatelessWidget {
       debugLogDiagnostics: true,
       restorationScopeId: 'router', // <-- restoration worked without this one
       routes: [
-        GoRoute(path: '/', builder: (_, __) => OEHomeScreen(), routes: [
+        GoRoute(path: '/', builder: (_, __) => const OEHomeScreen(), routes: [
           GoRoute(
             path: 'details',
-            builder: (_, __) => OEDetailsScreen(),
+            builder: (_, __) => const OEDetailsScreen(),
             // onExit: null,
             onExit: (context, _) async => await showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                title: Text('Confirm'),
-                contentPadding: EdgeInsets.all(32),
-                content: Text('Sure you really want to exit??'),
+                title: const Text('Confirm'),
+                contentPadding: const EdgeInsets.all(32),
+                content: const Text('Sure you really want to exit??'),
                 actions: [
                   TextButton(
-                      key: Key('no'),
+                      key: const Key('no'),
                       onPressed: () => context.pop(false),
-                      child: Text('Not really')),
+                      child: const Text('Not really')),
                   TextButton(
-                      key: Key('yes'),
+                      key: const Key('yes'),
                       onPressed: () => context.pop(true),
-                      child: Text('Definately!!'))
+                      child: const Text('Definately!!'))
                 ],
               ),
             ),
           ),
-          GoRoute(path: 'settings', builder: (_, __) => OESettingsScreen())
+          GoRoute(path: 'settings', builder: (_, __) => const OESettingsScreen())
         ])
       ]);
 

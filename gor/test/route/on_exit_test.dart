@@ -9,12 +9,12 @@ void main() {
       var goDetailsBtn = find.text('Go details');
       var goSettingsBtn = find.text('Go settings');
 
-      var noBtn = find.byKey(Key('no'));
-      var yesBtn = find.byKey(Key('yes'));
+      var noBtn = find.byKey(const Key('no'));
+      var yesBtn = find.byKey(const Key('yes'));
 
-      var homeScreen = find.byKey(Key('home-screen'));
-      var detailsScreen = find.byKey(Key('details-screen'));
-      var settingsScreen = find.byKey(Key('settings-screen'));
+      var homeScreen = find.byKey(const Key('home-screen'));
+      var detailsScreen = find.byKey(const Key('details-screen'));
+      var settingsScreen = find.byKey(const Key('settings-screen'));
 
       // test init
       await t.pumpWidget(OEApp());
