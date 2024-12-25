@@ -1,0 +1,22 @@
+{
+  "testAppTitle": "Skeleton Study App",
+  "@testAppTitle": {
+    "description": "Application title"
+  },
+  "testGreeting": "Hello, {name}!",
+  "@testGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "testUnreadMessages": "You have {number, plural, =0{no unread messages} =1{one unread message} other{{number} unread messages}}",
+  "@testUnreadMessages": {
+    "placeholders": {
+      "number": {
+        "type": "num"
+      }
+    }
+  }
+}
