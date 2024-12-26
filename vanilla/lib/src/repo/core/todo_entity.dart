@@ -15,7 +15,7 @@ class TodoEntity with _$TodoEntity {
   }) = _TodoEntity;
 
   factory TodoEntity.seed() =>
-      TodoEntity(complete: false, id: Uuid().v4(), task: '', note: '');
+      TodoEntity(complete: false, id: const Uuid().v4(), task: '', note: '');
 
   factory TodoEntity.fromJson(Map<String, Object?> json) =>
       _$TodoEntityFromJson(json);

@@ -59,7 +59,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> with RestorationMixin {
         title: Text(_create ? 'Add todo' : 'Update todo'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Form(
           key: _formKey,
           autovalidateMode: AutovalidateMode.always,
@@ -67,10 +67,10 @@ class _TodoEditScreenState extends State<TodoEditScreen> with RestorationMixin {
           child: ListView(
             children: [
               TextFormField(
-                key: Key('todo-task-form-field'),
+                key: const Key('todo-task-form-field'),
                 autofocus: _create,
                 controller: _taskController.value,
-                decoration: InputDecoration(labelText: 'Task'),
+                decoration: const InputDecoration(labelText: 'Task'),
                 maxLines: 1,
                 textCapitalization: TextCapitalization.sentences,
                 validator: (text) {
@@ -80,12 +80,12 @@ class _TodoEditScreenState extends State<TodoEditScreen> with RestorationMixin {
                   return null;
                 },
               ),
-              Gap(16),
+              const Gap(16),
               TextFormField(
-                key: Key('todo-note-form-field'),
+                key: const Key('todo-note-form-field'),
                 controller: _noteController.value,
                 textCapitalization: TextCapitalization.sentences,
-                decoration: InputDecoration(labelText: 'Note'),
+                decoration: const InputDecoration(labelText: 'Note'),
                 maxLines: 5,
               ),
             ],
@@ -93,7 +93,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> with RestorationMixin {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          key: Key('save-todo-btn'),
+          key: const Key('save-todo-btn'),
           onPressed: _formKey.currentState?.validate() ?? false
               ? () {
                   widget.saveTodo(_template.copyWith(
@@ -103,7 +103,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> with RestorationMixin {
                   context.pop();
                 }
               : null,
-          child: Icon(Icons.check)),
+          child: const Icon(Icons.check)),
     );
   }
 }

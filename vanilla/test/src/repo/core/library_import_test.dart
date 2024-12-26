@@ -5,7 +5,7 @@ void main() {
   group('Checking how a library import works', () {
     test('TodoEntity is imported from "repo_core.dart"', () async {
       expect(
-          TodoEntity(
+          const TodoEntity(
               complete: false, id: '42', task: 'Rest', note: 'Thoroughly'),
           isNot(null));
     });

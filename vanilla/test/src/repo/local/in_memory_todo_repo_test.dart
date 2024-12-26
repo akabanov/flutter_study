@@ -29,8 +29,10 @@ void main() {
     test('Initialises with good data', () async {
       expect(
           () => InMemoryTodoRepo(seed: [
-                TodoEntity(complete: false, id: '13', task: 'One', note: ''),
-                TodoEntity(complete: false, id: '14', task: 'Two', note: ''),
+                const TodoEntity(
+                    complete: false, id: '13', task: 'One', note: ''),
+                const TodoEntity(
+                    complete: false, id: '14', task: 'Two', note: ''),
               ]),
           returnsNormally);
     });

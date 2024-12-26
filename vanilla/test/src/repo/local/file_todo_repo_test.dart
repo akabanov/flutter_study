@@ -7,7 +7,7 @@ import 'package:vanilla/src/repo/repo_local.dart';
 void main() {
   group('File repository for Todo entities', () {
     var todos = [
-      TodoEntity(complete: true, id: '42', task: 'Rest', note: 'Fully')
+      const TodoEntity(complete: true, id: '42', task: 'Rest', note: 'Fully')
     ];
     var tempDir = Directory.systemTemp.createTemp('todo_temp_');
     var repo = FileTodoRepo(tag: 'todo', getDirectory: () => tempDir);

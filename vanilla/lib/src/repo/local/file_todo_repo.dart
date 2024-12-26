@@ -20,14 +20,14 @@ class FileTodoRepo implements TodoRepo {
   @override
   Future<File> saveTodos(List<TodoEntity> todos) async {
     var file = await _getFile();
-    return file.writeAsString(JsonEncoder()
+    return file.writeAsString(const JsonEncoder()
         .convert({'todos': todos.map((todo) => todo.toJson()).toList()}));
   }
 
   @override
   Future<List<TodoEntity>> loadTodos() async {
     var content = await _getFile().then((f) => f.readAsString());
-    return JsonDecoder()
+    return const JsonDecoder()
         .convert(content)['todos']
         .map<TodoEntity>((json) => TodoEntity.fromJson(json))
         .toList();

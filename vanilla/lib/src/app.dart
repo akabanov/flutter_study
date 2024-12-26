@@ -11,7 +11,7 @@ import 'package:vanilla/src/ui/screen/todo_list_screen.dart';
 import 'package:vanilla/src/ui/screen/todo_view_screen.dart';
 
 class App extends StatefulWidget {
-  App({super.key = const Key('app'), required this.todoRepo});
+  const App({super.key = const Key('app'), required this.todoRepo});
 
   final TodoRepo todoRepo;
 
@@ -60,7 +60,7 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
 
-    _listState = TodoListState.loading();
+    _listState = const TodoListState.loading();
     widget.todoRepo
         .loadTodos()
         .then((todos) => setState(() {
@@ -98,7 +98,7 @@ class _AppState extends State<App> {
 
     ScaffoldMessengerAccess.tryShowSnackBar(SnackBar(
       content: Text('"${expired.task}" removed'),
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
       action: SnackBarAction(
         label: 'Undo',
         onPressed: () => addTodo(expired),

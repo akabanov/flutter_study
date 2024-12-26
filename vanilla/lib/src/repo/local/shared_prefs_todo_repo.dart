@@ -18,14 +18,14 @@ class SharedPrefsTodoRepo implements TodoRepo {
 
   @override
   Future<void> saveTodos(List<TodoEntity> todos) async {
-    var jsonEncoder = JsonEncoder();
+    var jsonEncoder = const JsonEncoder();
     return _prefs.setStringList(_key,
         todos.map((todo) => todo.toJson()).map(jsonEncoder.convert).toList());
   }
 
   @override
   Future<List<TodoEntity>> loadTodos() async {
-    var jsonDecoder = JsonDecoder();
+    var jsonDecoder = const JsonDecoder();
     var list = await _prefs.getStringList(_key);
 
     if (list == null) {

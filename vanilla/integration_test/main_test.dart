@@ -14,8 +14,8 @@ void main() {
 
   App appWidget([List<TodoEntity> todos = const []]) {
     return App(
-        todoRepo:
-            InMemoryTodoRepo(latency: Duration(milliseconds: 10), seed: todos));
+        todoRepo: InMemoryTodoRepo(
+            latency: const Duration(milliseconds: 10), seed: todos));
   }
 
   void screenshot(String name) async {
@@ -77,7 +77,7 @@ void main() {
       runApp(appWidget(todos));
       await t.pumpAndSettle();
 
-      await t.drag(find.text('Rest'), Offset(200, 10));
+      await t.drag(find.text('Rest'), const Offset(200, 10));
       await t.pumpAndSettle();
 
       expect(
@@ -236,7 +236,7 @@ void main() {
       runApp(appWidget());
       await t.pumpAndSettle();
 
-      await t.tap(find.byKey(Key('add-todo-btn')));
+      await t.tap(find.byKey(const Key('add-todo-btn')));
       await t.pumpAndSettle();
       expect(find.text('Add todo'), findsOne);
     });
@@ -244,11 +244,11 @@ void main() {
     testWidgets('Creates todo and returns to todo list', (t) async {
       runApp(appWidget());
       await t.pumpAndSettle();
-      await t.tap(find.byKey(Key('add-todo-btn')));
+      await t.tap(find.byKey(const Key('add-todo-btn')));
       await t.pumpAndSettle();
 
-      var saveButton = find.byKey(Key('save-todo-btn'));
-      var taskFormField = find.byKey(Key('todo-task-form-field'));
+      var saveButton = find.byKey(const Key('save-todo-btn'));
+      var taskFormField = find.byKey(const Key('todo-task-form-field'));
 
       // Verify that the save button is disabled when no task name is entered
       expect(t.widget<FloatingActionButton>(saveButton).onPressed, isNull);
@@ -282,11 +282,11 @@ void main() {
     testWidgets('Preserves entered values on restore', (t) async {
       runApp(appWidget());
       await t.pumpAndSettle();
-      await t.tap(find.byKey(Key('add-todo-btn')));
+      await t.tap(find.byKey(const Key('add-todo-btn')));
       await t.pump();
       await t.pump();
 
-      var taskFormField = find.byKey(Key('todo-task-form-field'));
+      var taskFormField = find.byKey(const Key('todo-task-form-field'));
       await t.enterText(taskFormField, 'New Task');
       await t.pumpAndSettle();
       expect(find.text('New Task'), findsOne);

@@ -21,7 +21,7 @@ void main() {
     });
 
     test('Get todos returns unmodifiable list', () async {
-      var state = TodoListState([...todos]);
+      var state = TodoListState(const [...todos]);
 
       expect(() => state.todos.removeLast(), throwsUnsupportedError);
     });

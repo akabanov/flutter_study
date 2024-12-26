@@ -10,7 +10,7 @@ class LoadingErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Error')),
+        appBar: AppBar(title: const Text('Error')),
         body: Text("Something went wrong.\n$errorMessage",
             style: Theme.of(context).textTheme.bodyLarge,
             textAlign: TextAlign.center));

@@ -34,14 +34,14 @@ class _TodoViewScreenState extends State<TodoViewScreen> {
     TodoEntity? todo = state.get(widget.todoId);
     if (todo == null) {
       return Scaffold(
-        appBar: AppBar(title: Text('View task')),
-        body: ContentLoadingView(),
+        appBar: AppBar(title: const Text('View task')),
+        body: const ContentLoadingView(),
       );
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('View task'),
+        title: const Text('View task'),
         actions: [
           IconButton(
             key: TodoViewScreen.deleteBtnKey,
@@ -49,12 +49,12 @@ class _TodoViewScreenState extends State<TodoViewScreen> {
               widget.removeTodo(todo);
               context.pop();
             }),
-            icon: Icon(Icons.delete),
+            icon: const Icon(Icons.delete),
           ),
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,19 +65,19 @@ class _TodoViewScreenState extends State<TodoViewScreen> {
                 widget.updateTodo(todo.copyWith(complete: complete ?? false));
               }),
             ),
-            Gap(16),
+            const Gap(16),
             Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Gap(8),
+                  const Gap(8),
                   Text(
                     todo.task,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
-                  Gap(16),
+                  const Gap(16),
                   Text(todo.note),
                 ],
               ),

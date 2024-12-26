@@ -44,7 +44,6 @@ enum TodoListTab {
 class _TodoListScreenState extends State<TodoListScreen> with RestorationMixin {
   RestorableInt currentTab = RestorableInt(0);
 
-
   @override
   String get restorationId => 'todo-list-screen';
 
@@ -67,10 +66,10 @@ class _TodoListScreenState extends State<TodoListScreen> with RestorationMixin {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Todo list'),
+        title: const Text('Todo list'),
       ),
       body: switch ((state.status, currentTabIndex)) {
-        (TodoListStateStatus.loading, _) => ContentLoadingView(),
+        (TodoListStateStatus.loading, _) => const ContentLoadingView(),
         (_, 1) => TodoStatsView(key: TodoListScreen.statsKey, state: state),
         _ => ListView.builder(
             key: TodoListScreen.listKey,
@@ -87,9 +86,9 @@ class _TodoListScreenState extends State<TodoListScreen> with RestorationMixin {
           )
       },
       floatingActionButton: FloatingActionButton(
-        key: Key('add-todo-btn'),
+        key: const Key('add-todo-btn'),
         onPressed: () => context.goNamed(TodoEditScreen.addRouteName),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       bottomNavigationBar: NavigationBar(
           selectedIndex: currentTabIndex,
