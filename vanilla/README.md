@@ -1,9 +1,1 @@
-# vanilla
-
-## Shortcuts
-
-```shell
-flutter drive \
-  --driver=test_driver/integration_test.dart \
-  --target=integration_test/main_test.dart
-```
+# To-do app study from the Flutter arch samples
